@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="article-entry">
+    <h2>{{ contact.last_name }}, {{ contact.first_name }}</h2>
+        <img src="#" alt="contact_avatar">
+    <p>{{ contact.email }}</p>
+    <p>{{ contact.dob }}</p>
+    <p>{{ contact.notes }}</p>
+    </div>
+    <div>
+        <p><a href="{% url 'contact_edit' contact.pk %}">Edit</a></p>
+        <p><a href="{% url 'contact_delete' contact.pk %}">Delete</a></p>
+        <p>Back to <a href="{% url 'contact_list' %}">Contacts List</a>.</p>
+    </div>
+
+{% endblock content %}
