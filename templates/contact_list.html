@@ -13,20 +13,21 @@
         <th scope="col">DOB</th>
     <th scope="col"></th>
         <th scope="col"></th>
+        <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
   {% for contact in contact_list %}
-
     <tr>
-      <td><a href="{{ contact.get_absolute_url }}">{{ contact.last_name }}</a></td>
-      <td>{{ contact.first_name }}</td>
-      <td>{{ contact.email }}</td>
-    <td>{{ contact.dob }}</td>
+        <td><a href="{{ contact.get_absolute_url }}">{{ contact.last_name }}</a></td>
+        <td>{{ contact.first_name }}</td>
+        <td>{{ contact.email }}</td>
+        <td>{{ contact.dob }}</td>
+        <td><a href="{{ contact.get_absolute_url }}">New Phone Number</a></td>
         <td><a href="{% url 'contact_edit' contact.pk %}">Edit</a></td>
         <td><a href="{% url 'contact_delete' contact.pk %}">Delete</a></td>
-    </tr>
 
+    </tr>
   {% endfor %}
   </tbody>
 </table>

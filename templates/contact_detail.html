@@ -1,11 +1,27 @@
 {% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
     <div class="article-entry">
     <h2>{{ contact.last_name }}, {{ contact.first_name }}</h2>
-        <img src="#" alt="contact_avatar">
+    {% if contact.avatar %}
+        <img src="{{ contact.avatar.url }}" alt="{{ contact.first_name }}{{ contact.last_name }}">
+    {% endif %}
+    <h5>Contact e-mail</h5>
     <p>{{ contact.email }}</p>
+        <h5>Phone Numbers</h5>
+        {% for  phone_number in contact.phonenumber_set.all %}
+            <p>{{ phone_number }}</p>
+        {% endfor %}
+    <h6>Add new phone number</h6>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-success ml-2" type="submit">Save</button>
+        </form>
+    <h5>Date of Birth</h5>
     <p>{{ contact.dob }}</p>
     <p>{{ contact.notes }}</p>
     </div>
