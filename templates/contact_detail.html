@@ -10,10 +10,10 @@
         <img src="{{ contact.avatar.url }}" alt="{{ contact.first_name }}{{ contact.last_name }}">
     {% endif %}
     <h5>Contact e-mail</h5>
-    <p>{{ contact.email }}</p>
+    <p><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></p>
         <h5>Phone Numbers</h5>
         {% for  phone_number in contact.phonenumber_set.all %}
-            <p>{{ phone_number }}</p>
+            <p><a href="tel:{{ phone_number }}">{{ phone_number }}</a></p>
         {% endfor %}
     <h6>Add new phone number</h6>
         <form action="" method="post">
