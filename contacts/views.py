@@ -19,6 +19,21 @@ class ContactListView(LoginRequiredMixin, ListView):
         return qs
 
 
+class ComingBirthdayListView(LoginRequiredMixin, ListView):
+    model = Contact
+    template_name = "coming_birthday.html"
+
+    def get_queryset(self, *args, **kwargs):
+        qs = (
+            super(ComingBirthdayListView, self)
+            .get_queryset()
+            .filter(owner=self.request.user)
+        )
+        # qs = qs.order_by("last_name")
+        print(qs)
+        return qs
+
+
 class PhoneNumberGet(DeleteView):
     model = Contact
     template_name = "contact_detail.html"

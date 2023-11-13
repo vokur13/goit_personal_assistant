@@ -48,6 +48,8 @@ async def create_contact():
         given_name = fake.first_name()
         surname_name = fake.last_name()
         address = fake.street_address()
+        city = fake.city()
+        full_address = address + ", " + city
         email = await person_email(given_name, surname_name)
         dob = fake.date_of_birth(tzinfo=None, minimum_age=18, maximum_age=65)
         notes = fake.text(max_nb_chars=100)
@@ -56,7 +58,7 @@ async def create_contact():
                 row = Contact.objects.create(
                     first_name=given_name,
                     last_name=surname_name,
-                    address=address,
+                    address=full_address,
                     email=email,
                     dob=dob,
                     notes=notes,
