@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подробности заметки</title>
+</head>
+<body>
+    <h1>Подробности заметки</h1>
+    
+    <h2>{{ object.name }}</h2>
+    <p>{{ object.description }}</p>
+
+    <!-- Ссылка для создания тега для текущей заметки -->
+    <a href="{% url 'notes:tag_create' %}?note_id={{ object.id }}&next={{ request.path }}">Создать тег</a>
+
+    <!-- Кнопка для возврата к списку заметок -->
+    <a href="{% url 'notes:note_list' %}">Назад к списку заметок</a>
+</body>
+</html>
