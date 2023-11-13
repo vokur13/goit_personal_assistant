@@ -6,6 +6,8 @@
 
     <div class="article-entry">
     <h2>{{ contact.last_name }}, {{ contact.first_name }}</h2>
+    <h5>Address</h5>
+    <p>{{ contact.address }}</p>
     {% if contact.avatar %}
         <img src="{{ contact.avatar.url }}" alt="{{ contact.first_name }}{{ contact.last_name }}">
     {% endif %}

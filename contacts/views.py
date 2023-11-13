@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import View
-from django.views.generic import ListView, DetailView, FormView
+from django.views.generic import ListView, FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy, reverse
@@ -13,10 +13,10 @@ class ContactListView(LoginRequiredMixin, ListView):
     model = Contact
     template_name = "contact_list.html"
 
-    def get_queryset(self):
-        return (
-            super(ContactListView, self).get_queryset().filter(owner=self.request.user)
-        )
+    def get_queryset(self, *args, **kwargs):
+        qs = super(ContactListView, self).get_queryset().filter(owner=self.request.user)
+        qs = qs.order_by("last_name")
+        return qs
 
 
 class PhoneNumberGet(DeleteView):
@@ -59,20 +59,6 @@ class ContactDetailView(LoginRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         view = PhoneNumberPost.as_view()
         return view(request, *args, **kwargs)
-
-
-# class ContactDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-#     model = Contact
-#     template_name = "contact_detail.html"
-#
-#     def test_func(self):
-#         obj = self.get_object()
-#         return obj.owner == self.request.user
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context["form"] = PhoneNumberForm()
-#         return context
 
 
 class ContactUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

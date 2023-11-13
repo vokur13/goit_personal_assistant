@@ -6,12 +6,14 @@ import re
 
 from phonenumber_field.modelfields import PhoneNumberField
 
-regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b"
+regex_email = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b"
+regex_phone_number = r"[+]\d{9,12}$"
 
 
 class Contact(models.Model):
     first_name = models.CharField(max_length=255, null=False, blank=False)
     last_name = models.CharField(max_length=255, null=False, blank=False)
+    address = models.CharField(max_length=255, null=True, blank=True)
     avatar = models.ImageField(upload_to="images/", null=True, blank=True)
     email = models.EmailField(max_length=254, unique=True, null=True, blank=True)
     dob = models.DateField(null=True, blank=True)
@@ -24,7 +26,7 @@ class Contact(models.Model):
     def save(self, *args, **kwargs):
         self.email = self.email.lower().strip()  # Reduces junk to ""
         if self.email != "":  # If it's not blank
-            if not re.match(regex, self.email):  # If it's not an email address
+            if not re.match(regex_email, self.email):  # If it's not an email address
                 raise ValidationError("%s is not an email address, dummy!" % self.email)
         if self.email == "":
             self.email = None
@@ -38,11 +40,23 @@ class Contact(models.Model):
 
 
 class PhoneNumber(models.Model):
-    phone_number = PhoneNumberField(blank=True)
+    phone_number = models.CharField(max_length=24, blank=True, null=True, unique=True)
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE)
 
+    def save(self, *args, **kwargs):
+        self.phone_number = self.phone_number.lower().strip()  # Reduces junk to ""
+        if self.phone_number != "":  # If it's not blank
+            if not re.match(
+                regex_phone_number, self.phone_number
+            ):  # If it's not a phone number
+                raise ValidationError(
+                    "%s is not valid phone number, dummy!" % self.phone_number
+                )
+        if self.phone_number == "":
+            self.phone_number = None
+        super(PhoneNumber, self).save(*args, **kwargs)
+
     def __str__(self):
-        # return f"{self.contact}: {str(self.phone_number)}"
         return f"{str(self.phone_number)}"
 
     def get_absolute_url(self):
