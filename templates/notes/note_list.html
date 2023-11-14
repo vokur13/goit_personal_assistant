@@ -7,6 +7,14 @@
 </head>
 <body>
     <h1>Список заметок</h1>
+
+    <form method="GET" action="{% url 'notes:note_list' %}">
+        <div class="mb-3">
+            <label for="searchInput" class="form-label">Search:</label>
+            <input type="text" class="form-control" id="searchInput" name="q" placeholder="Search...">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
     
     <!-- Кнопка для создания новой заметки -->
     <a href="{% url 'notes:note_create' %}">Создать новую заметку</a>
