@@ -37,12 +37,15 @@ class NoteListView(LoginRequiredMixin, ListView):
         context['all_tags'] = Tag.objects.all()
         return context
     
+
+#Статус заметки  
 @require_POST
 def toggle_note_done(request, pk):
     note = get_object_or_404(Note, pk=pk)
     note.done = not note.done
     note.save()
     return redirect('notes:note_list')
+
 
 # Отображение деталей заметок
 class NoteDetailView(LoginRequiredMixin, DetailView):
