@@ -16,6 +16,12 @@ class NoteForm(ModelForm):
         fields = ['name', 'description', 'tags']
 
 
+class NoteDoneForm(forms.ModelForm):
+    class Meta:
+        model = Note
+        fields = ['done']
+
+
 class SearchForm(forms.Form):
     query = forms.CharField(max_length=100, required=False)
 
