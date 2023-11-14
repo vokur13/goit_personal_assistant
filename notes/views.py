@@ -1,6 +1,7 @@
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 
 from .models import Note, Tag
 from .forms import NoteForm, TagForm
@@ -11,6 +12,23 @@ class NoteListView(LoginRequiredMixin, ListView):
     template_name = 'notes/note_list.html'
     context_object_name = 'notes'
 
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        tag_filter = self.request.GET.get('tag')
+
+        queryset = Note.objects.all()
+
+        if query:
+            queryset = queryset.filter(
+                Q(name__icontains=query) | Q(description__icontains=query) |
+                Q(tags__name__icontains=query)
+            )
+
+        if tag_filter:
+            queryset = queryset.filter(tags__name=tag_filter)
+
+        return queryset
+    
 # Отображение деталей заметок
 class NoteDetailView(LoginRequiredMixin, DetailView):
     model = Note
