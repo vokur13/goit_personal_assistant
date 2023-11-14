@@ -1,5 +1,7 @@
-from django.urls import reverse
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.decorators.http import require_POST
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 
@@ -30,6 +32,17 @@ class NoteListView(LoginRequiredMixin, ListView):
 
         return queryset
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_tags'] = Tag.objects.all()
+        return context
+    
+@require_POST
+def toggle_note_done(request, pk):
+    note = get_object_or_404(Note, pk=pk)
+    note.done = not note.done
+    note.save()
+    return redirect('notes:note_list')
 
 # Отображение деталей заметок
 class NoteDetailView(LoginRequiredMixin, DetailView):
@@ -99,9 +112,10 @@ class TagEditView(LoginRequiredMixin, UpdateView):
 
 
 # Удаление тега
-class TagDeleteView(LoginRequiredMixin, DeleteView):
+class TagDeleteView(DeleteView):
     model = Tag
     template_name = 'notes/tag_confirm_delete.html'
-    
+    success_url = reverse_lazy('notes:tag_list')
+
     def get_success_url(self):
-        return reverse('notes:tag_list')
+        return self.success_url
