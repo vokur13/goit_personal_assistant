@@ -1,20 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Подробности заметки</title>
-</head>
-<body>
-    <h1>Подробности заметки</h1>
-    
-    <h2>{{ object.name }}</h2>
-    <p>{{ object.description }}</p>
+{% extends 'base.html' %}
 
-    <!-- Ссылка для создания тега для текущей заметки -->
-    <a href="{% url 'notes:tag_create' %}?note_id={{ object.id }}&next={{ request.path }}">Создать тег</a>
+{% block title %}Note Detail{% endblock title %}
 
-    <!-- Кнопка для возврата к списку заметок -->
-    <a href="{% url 'notes:note_list' %}">Назад к списку заметок</a>
-</body>
-</html>
+{% block content %}
+  <h1>Note Detail</h1>
+  <p><strong>Name:</strong> {{ note.name }}</p>
+  <p><strong>Description:</strong> {{ note.description }}</p>
+  <p><strong>Status:</strong> {% if note.done %}Done{% else %}Pending{% endif %}</p>
+
+  <!-- Отобразите связанные теги для заметки -->
+  <p><strong>Tags:</strong>
+    {% for tag in note.tags.all %}
+      <span>{{ tag.name }}</span>
+    {% endfor %}
+  </p>
+
+  <!-- Добавьте другие поля и информацию о заметке, если необходимо -->
+
+  <p><a href="{% url 'notes:note_edit' note.id %}">Edit Note</a></p>
+  <p><a href="{% url 'notes:note_list' %}">Back to Note List</a></p>
+{% endblock content %}
