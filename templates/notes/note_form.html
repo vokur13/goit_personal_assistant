@@ -1,25 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if object %}Редактирование{% else %}Создание{% endif %} заметки</title>
-</head>
-<body>
-    <h1>{% if object %}Редактирование{% else %}Создание{% endif %} заметки</h1>
-    
-    <form method="post" action="{% if object %}{% url 'notes:note_edit' pk=object.pk %}{% else %}{% url 'notes:note_create' %}{% endif %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Далее">
-    </form>
+{% extends 'base.html' %}
 
-    <!-- Кнопка для возврата к списку заметок -->
-    <a href="{% url 'notes:note_list' %}">Назад к списку заметок</a>
+{% block title %}
+  {% if note.id %}
+    Edit Note
+  {% else %}
+    Create New Note
+  {% endif %}
+{% endblock title %}
 
-    {% if object %}
-        <!-- Добавлена ссылка для перехода к созданию тегов -->
-        <a href="{% url 'notes:tag_create' %}?next={% url 'notes:note_edit' pk=object.pk %}">Далее: создать теги</a>
+{% block content %}
+  <h1>
+    {% if note.id %}
+      Edit Note
+    {% else %}
+      Create New Note
     {% endif %}
-</body>
-</html>
+  </h1>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+
+  <a href="{% url 'notes:note_list' %}" class="btn btn-secondary mt-3">Cancel</a>
+{% endblock content %}
