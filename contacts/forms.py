@@ -1,5 +1,7 @@
 from django import forms
-from .models import PhoneNumber
+from .models import (
+    PhoneNumber,
+)
 
 
 class PhoneNumberForm(forms.ModelForm):
