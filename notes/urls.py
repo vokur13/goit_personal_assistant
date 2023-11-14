@@ -9,6 +9,7 @@ from .views import (
     TagCreateView,
     TagEditView,
     TagDeleteView,
+    toggle_note_done,
 )
 
 app_name = 'notes'
@@ -20,7 +21,7 @@ urlpatterns = [
     path('notes/create/', NoteCreateView.as_view(), name='note_create'),
     path('notes/<int:pk>/edit/', NoteEditView.as_view(), name='note_edit'),
     path('notes/<int:pk>/delete/', NoteDeleteView.as_view(), name='note_delete'),
-
+    path('toggle_done/<int:pk>/', toggle_note_done, name='toggle_done'),
     # Теги
     path('tags/', TagListView.as_view(), name='tag_list'),
     path('tags/create/', TagCreateView.as_view(), name='tag_create'),
