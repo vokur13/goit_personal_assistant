@@ -1,47 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список заметок</title>
-</head>
-<body>
-    <h1>Список заметок</h1>
+{% extends 'base.html' %}
 
-    <form method="GET" action="{% url 'notes:note_list' %}">
-        <div class="mb-3">
-            <label for="searchInput" class="form-label">Search:</label>
-            <input type="text" class="form-control" id="searchInput" name="q" placeholder="Search...">
-        </div>
-        <button type="submit" class="btn btn-primary">Search</button>
-    </form>
-    
-    <!-- Кнопка для создания новой заметки -->
-    <a href="{% url 'notes:note_create' %}">Создать новую заметку</a>
+{% block title %}Note List{% endblock title %}
 
-    <!-- Список заметок -->
-    <ul>
-        {% for note in object_list %}
-            <li>
-                {% if note.done %}
-                    <input type="checkbox" checked disabled>
-                {% else %}
-                    <input type="checkbox" disabled>
-                {% endif %}
-                
-                {{ note.name }}
-                
-                <a href="{% url 'notes:note_edit' pk=note.pk %}">Редактировать</a>
-                <a href="{% url 'notes:note_detail' pk=note.pk %}">Подробнее</a>
-                <form method="post" action="{% url 'notes:note_delete' pk=note.pk %}" style="display: inline;">
-                    {% csrf_token %}
-                    <input type="submit" value="Удалить">
-                </form>
-            </li>
+{% block content %}
+  <h1>Note List</h1>
+
+  <!-- Поисковик -->
+  <form method="GET" action="{% url 'notes:note_list' %}">
+    <div class="mb-3">
+      <label for="searchInput" class="form-label">Search:</label>
+      <input type="text" class="form-control" id="searchInput" name="q" placeholder="Search...">
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+
+  <!-- Список заметок -->
+  <ul>
+    {% for note in notes %}
+      <li>
+        <form method="post" action="{% url 'notes:toggle_done' note.id %}">
+          {% csrf_token %}
+          <input type="checkbox" name="done" {% if note.done %}checked{% endif %} onchange="this.form.submit()">
+          <input type="hidden" name="current_done" value="{{ note.done }}">
+        </form>
+        <a href="{% url 'notes:note_detail' note.id %}">{{ note.name }}</a>
+  
+        <!-- Отобразите связанные теги для каждой заметки -->
+        Tag:
+        {% for tag in note.tags.all %}
+          <span>{{ tag.name }}</span>
         {% endfor %}
-    </ul>
+  
+        <a href="{% url 'notes:note_edit' note.id %}">Редактировать</a>
+        <a href="{% url 'notes:note_delete' note.id %}">Удалить</a>
+      </li>
+    {% endfor %}
+  </ul>
 
-    <!-- Кнопка для перехода на главную страницу проекта -->
-    <a href="{% url 'home' %}">На главную</a>
-</body>
-</html>
+  <!-- Ссылка на создание новой заметки -->
+  <a href="{% url 'notes:note_create' %}" class="btn btn-primary mt-3">Create New Note</a>
+
+  <!-- Список доступных тегов и кнопка для перехода на страницу с тегами -->
+  <div class="mt-3">
+    <h2>Available Tags</h2>
+    <ul>
+      {% for tag in all_tags %}
+        <li>{{ tag.name }}</li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'notes:tag_list' %}" class="btn btn-secondary">Tag List</a>
+  </div>
+
+{% endblock content %}
