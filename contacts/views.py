@@ -1,5 +1,3 @@
-from datetime import date, timedelta, datetime
-
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import View
 from django.views.generic import ListView, FormView
@@ -27,27 +25,10 @@ class ComingBirthdayListView(LoginRequiredMixin, ListView):
     model = Contact
     template_name = "coming_birthday.html"
 
-    def get_queryset(self, *args, **kwargs):
-        qs = (
-            super(ComingBirthdayListView, self)
-            .get_queryset()
-            .filter(owner=self.request.user)
-        )
+    Contact.objects.get_upcoming_birthdays()
 
-        interval = 49
-        today = date.today()
-        interval_target_date = timedelta(days=interval)
-        target_date = today + interval_target_date
-
-        if today.year == target_date.year:
-            return qs.filter(
-                dob__month__gte=today.month, dob__month__lte=target_date.month
-            ).filter(dob__day__gte=today.day, dob__day__lte=target_date.day)
-
-        elif today.year != target_date.year:
-            return qs.filter(
-                dob__month__gte=today.month, dob__month__lte=target_date.month
-            ).filter(dob__day__gte=today.day, dob__day__lte=target_date.day)
+    def get_queryset(self):
+        return Contact.objects.get_upcoming_birthdays(days=14)
 
 
 class PhoneNumberGet(DeleteView):

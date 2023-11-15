@@ -3,8 +3,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 import re
+from birthday import BirthdayField, BirthdayManager
 
-from phonenumber_field.modelfields import PhoneNumberField
 
 regex_email = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b"
 regex_phone_number = r"[+]\d{9,12}$"
@@ -16,12 +16,13 @@ class Contact(models.Model):
     address = models.CharField(max_length=255, null=True, blank=True)
     avatar = models.ImageField(upload_to="images/", null=True, blank=True)
     email = models.EmailField(max_length=254, unique=True, null=True, blank=True)
-    dob = models.DateField(null=True, blank=True)
+    dob = BirthdayField(null=True, blank=True)
     notes = models.TextField(null=True, blank=True)
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
+    objects = BirthdayManager()
 
     def save(self, *args, **kwargs):
         self.email = self.email.lower().strip()  # Reduces junk to ""
