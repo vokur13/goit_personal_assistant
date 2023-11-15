@@ -7,9 +7,19 @@
 
   <!-- Поисковик -->
   <form method="GET" action="{% url 'notes:note_list' %}">
-    <div class="mb-3">
-      <label for="searchInput" class="form-label">Search:</label>
-      <input type="text" class="form-control" id="searchInput" name="q" placeholder="Search...">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="noteQueryInput" class="form-label">Search by Note Name:</label>
+          <input type="text" class="form-control" id="noteQueryInput" name="note_query" placeholder="Search by Note Name..." value="{{ search_form.note_query.value }}">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="tagQueryInput" class="form-label">Search by Tag:</label>
+          <input type="text" class="form-control" id="tagQueryInput" name="tag_query" placeholder="Search by Tag..." value="{{ search_form.tag_query.value }}">
+        </div>
+      </div>
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
   </form>
