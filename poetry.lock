@@ -53,6 +53,21 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-birthday"
+version = "0.1.4"
+description = "Helper field and manager for working with birthdays"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-birthday-0.1.4.tar.gz", hash = "sha256:bab5930be90030208de943cea8bac293309751f1fa95b7b6a0d823bda251ef9a"},
+    {file = "django_birthday-0.1.4-py3-none-any.whl", hash = "sha256:4bdf28a42e37f19f423b530df31b0567bfe8d968591e4ff26533f57b7f5a360d"},
+]
+
+[package.extras]
+develop = ["django", "pytest", "pytest-django", "tox"]
+test = ["pytest", "pytest-cov", "pytest-django"]
+
+[[package]]
 name = "django-crispy-forms"
 version = "2.1"
 description = "Best way to have Django DRY forms"
@@ -390,4 +405,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "14f95701acc5b32e3d00fc580bcceb1f143396c8e8c8baf062ae0ebd116f005d"
+content-hash = "ac740c7b4f1b830c22ddae236db7d485fcc4924bdbc6b56f8f7f4d87e2cb63bc"

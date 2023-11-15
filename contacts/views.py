@@ -6,7 +6,9 @@ from django.views.generic.edit import UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy, reverse
 
 from .models import Contact
-from .forms import PhoneNumberForm
+from .forms import (
+    PhoneNumberForm,
+)
 
 
 class ContactListView(LoginRequiredMixin, ListView):
@@ -17,6 +19,16 @@ class ContactListView(LoginRequiredMixin, ListView):
         qs = super(ContactListView, self).get_queryset().filter(owner=self.request.user)
         qs = qs.order_by("last_name")
         return qs
+
+
+class ComingBirthdayListView(LoginRequiredMixin, ListView):
+    model = Contact
+    template_name = "coming_birthday.html"
+
+    Contact.objects.get_upcoming_birthdays()
+
+    def get_queryset(self):
+        return Contact.objects.get_upcoming_birthdays(days=14)
 
 
 class PhoneNumberGet(DeleteView):
