@@ -25,12 +25,13 @@
         </form>
         <a href="{% url 'notes:note_detail' note.id %}">{{ note.name }}</a>
   
-        <!-- Отобразите связанные теги для каждой заметки -->
+        <!-- Отображение тега для каждой заметки -->
         Tag:
         {% for tag in note.tags.all %}
           <span>{{ tag.name }}</span>
         {% endfor %}
-  
+        <!-- Добавьте вывод времени создания -->
+        <p>Created: {{ note.created }}</p>
         <a href="{% url 'notes:note_edit' note.id %}">Редактировать</a>
         <a href="{% url 'notes:note_delete' note.id %}">Удалить</a>
       </li>
