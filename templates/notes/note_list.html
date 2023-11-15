@@ -30,7 +30,7 @@
         {% for tag in note.tags.all %}
           <span>{{ tag.name }}</span>
         {% endfor %}
-        <!-- Добавьте вывод времени создания -->
+        <!-- Вывод времени создания -->
         <p>Created: {{ note.created }}</p>
         <a href="{% url 'notes:note_edit' note.id %}">Редактировать</a>
         <a href="{% url 'notes:note_delete' note.id %}">Удалить</a>
