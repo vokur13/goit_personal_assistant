@@ -16,19 +16,16 @@ class NoteListView(LoginRequiredMixin, ListView):
     context_object_name = 'notes'
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
-        tag_filter = self.request.GET.get('tag')
+        note_query = self.request.GET.get('note_query')
+        tag_query = self.request.GET.get('tag_query')
 
         queryset = Note.objects.all()
 
-        if query:
-            queryset = queryset.filter(
-                Q(name__icontains=query) | Q(description__icontains=query) |
-                Q(tags__name__icontains=query)
-            )
+        if note_query:
+            queryset = queryset.filter(Q(name__icontains=note_query) | Q(description__icontains=note_query))
 
-        if tag_filter:
-            queryset = queryset.filter(tags__name=tag_filter)
+        if tag_query:
+            queryset = queryset.filter(tags__name__icontains=tag_query)
 
         return queryset
     
