@@ -10,7 +10,7 @@
       <th scope="col">LAST NAME</th>
       <th scope="col">FIRST NAME</th>
       <th scope="col">E-MAIL</th>
-        <th scope="col"><a href="{% url 'coming_birthday' %}">DOB</a></th>
+        <th scope="col"><a href="{% url 'dob_list' %}">DOB</a></th>
 {#        <th scope="col">DOB</th>#}
         <th scope="col"></th>
         <th scope="col"></th>
@@ -19,6 +19,7 @@
   </thead>
   <tbody>
   {% for contact in contact_list %}
+      {% if contact.owner.pk == request.user.pk %}
     <tr>
         <td><a href="{{ contact.get_absolute_url }}">{{ contact.last_name }}</a></td>
         <td>{{ contact.first_name }}</td>
@@ -29,6 +30,7 @@
         <td><a href="{% url 'contact_delete' contact.pk %}">Delete</a></td>
 
     </tr>
+      {% endif %}
   {% endfor %}
   </tbody>
 </table>

@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, FormView
 from django.views.generic.detail import SingleObjectMixin
@@ -8,6 +9,7 @@ from django.urls import reverse_lazy, reverse
 from .models import Contact
 from .forms import (
     PhoneNumberForm,
+    DOBIntervalForm,
 )
 
 
@@ -21,14 +23,27 @@ class ContactListView(LoginRequiredMixin, ListView):
         return qs
 
 
-class ComingBirthdayListView(LoginRequiredMixin, ListView):
-    model = Contact
-    template_name = "coming_birthday.html"
+class DOBListView(LoginRequiredMixin, ListView, FormView):
+    template_name = "dob_list.html"
+    success_url = reverse_lazy("dob_list.html")
 
     Contact.objects.get_upcoming_birthdays()
 
-    def get_queryset(self):
-        return Contact.objects.get_upcoming_birthdays(days=14)
+    def get(self, request, *args, **kwargs):
+        form = DOBIntervalForm()
+        return render(request, self.template_name, {"form": form})
+
+    def post(self, request, *args, **kwargs):
+        form = DOBIntervalForm(request.POST)
+        if form.is_valid():
+            interval = form.cleaned_data["interval"]
+            queryset = Contact.objects.get_upcoming_birthdays(days=interval)
+            return render(
+                request,
+                self.template_name,
+                {"form": form, "contact_list": queryset, "interval": interval},
+            )
+        return render(request, self.template_name, {"form": form})
 
 
 class PhoneNumberGet(DeleteView):

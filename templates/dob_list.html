@@ -6,6 +6,7 @@
 
 {% block content %}
     <h2>Upcoming Birthday List</h2>
+        <h6>for the next {{ interval }} days period</h6>
 
     <table class="table table-striped">
     <thead>
@@ -13,17 +14,23 @@
         <th scope="col">LAST NAME</th>
         <th scope="col">FIRST NAME</th>
         <th scope="col">DOB
-
+            <form action="{% url 'dob_list' %}" method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button class="btn btn-secondary ml2" type="submit">Submit</button>
+            </form>
         </th>
     </tr>
     </thead>
     <tbody>
     {% for contact in contact_list%}
+        {% if contact.owner.pk == request.user.pk %}
         <tr>
         <td><a href="{{ contact.get_absolute_url }}">{{ contact.last_name }}</a></td>
         <td>{{ contact.first_name }}</td>
         <td>{{ contact.dob }}</td>
         </tr>
+        {% endif %}
     {% endfor %}
     </tbody>
     </table>

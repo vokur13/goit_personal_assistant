@@ -1,8 +1,5 @@
 from django.contrib import admin
-from .models import (
-    Contact,
-    PhoneNumber,
-)
+from .models import Contact, PhoneNumber
 
 
 class PhoneNumberInLine(admin.TabularInline):
