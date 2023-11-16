@@ -20,6 +20,7 @@
       <ul class="nav col-12 col-lg-auto ms-lg-auto mb-2 justify-content-center
           mb-md-0">
         {% if user.is_authenticated %}
+        <li><a href="{% url 'notes:note_list' %}" class="nav-link px-2 link-dark">+ Notes</a></li>
         <li><a href="{% url 'contact_new' %}" class="nav-link px-2 link-dark">+ New Contact</a></li>
       </ul>
       <div class="dropdown text-end">

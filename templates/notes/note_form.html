@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {% if note.id %}
+    Edit Note
+  {% else %}
+    Create New Note
+  {% endif %}
+{% endblock title %}
+
+{% block content %}
+  <h1>
+    {% if note.id %}
+      Edit Note
+    {% else %}
+      Create New Note
+    {% endif %}
+  </h1>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+
+  <a href="{% url 'notes:note_list' %}" class="btn btn-secondary mt-3">Cancel</a>
+{% endblock content %}
