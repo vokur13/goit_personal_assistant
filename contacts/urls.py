@@ -6,7 +6,7 @@ from .views import (
     ContactUpdateView,
     ContactDeleteView,
     ContactCreateView,
-    ComingBirthdayListView,
+    DOBListView,
 )
 
 urlpatterns = [
@@ -14,6 +14,6 @@ urlpatterns = [
     path("<int:pk>/edit", ContactUpdateView.as_view(), name="contact_edit"),
     path("<int:pk>/delete", ContactDeleteView.as_view(), name="contact_delete"),
     path("new/", ContactCreateView.as_view(), name="contact_new"),
-    path("coming_birthday/", ComingBirthdayListView.as_view(), name="coming_birthday"),
+    path("dob_list/", DOBListView.as_view(), name="dob_list"),
     path("", ContactListView.as_view(), name="contact_list"),
 ]
