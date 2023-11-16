@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env.str("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", default=Fals)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -93,23 +93,17 @@ DB_PASSWORD = env.str("DB_PASSWORD")
 DB_HOST = env.str("DB_HOST")
 DB_PORT = env.str("DB_PORT")
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": DB_NAME,
-#         "USER": DB_USER,
-#         "PASSWORD": DB_PASSWORD,
-#         "HOST": DB_HOST,
-#         "PORT": DB_PORT,
-#     }
-# }
+ DATABASES = {
+     "default": {
+         "ENGINE": "django.db.backends.postgresql_psycopg2",
+         "NAME": DB_NAME,
+         "USER": DB_USER,
+         "PASSWORD": DB_PASSWORD,
+         "HOST": DB_HOST,
+         "PORT": DB_PORT,
+     }
+ }
 
 
 # Password validation
