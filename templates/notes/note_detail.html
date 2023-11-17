@@ -3,20 +3,20 @@
 {% block title %}Note Detail{% endblock title %}
 
 {% block content %}
-  <h1>Note Detail</h1>
-  <p><strong>Name:</strong> {{ note.name }}</p>
-  <p><strong>Description:</strong> {{ note.description }}</p>
-  <p><strong>Status:</strong> {% if note.done %}Done{% else %}Pending{% endif %}</p>
+  <h1>Подробиці нотатки</h1>
+  <p><strong>Назва:</strong> {{ note.name }}</p>
+  <p><strong>Опис:</strong> {{ note.description }}</p>
+  <p><strong>Статус:</strong> {% if note.done %}Готово{% else %}В процесі{% endif %}</p>
 
   <!-- Отображение тега для заметки -->
-  <p><strong>Tags:</strong>
+  <p><strong>Теги:</strong>
     {% for tag in note.tags.all %}
       <span>{{ tag.name }}</span>
     {% endfor %}
   </p>
   <!-- Вывод времени создания -->
-  <p><strong>Created:</strong> {{ note.created }}</p>
+  <p><strong>Створено:</strong> {{ note.created }}</p>
 
-  <p><a href="{% url 'notes:note_edit' note.id %}">Edit Note</a></p>
-  <p><a href="{% url 'notes:note_list' %}">Back to Note List</a></p>
+  <p><a href="{% url 'notes:note_edit' note.id %}">Змінити нотатку</a></p>
+  <p><a href="{% url 'notes:note_list' %}">Назад</a></p>
 {% endblock content %}
