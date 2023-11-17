@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "accounts",
     "pages",
     "contacts",
+    "notes"
     # Other apps…
     "phonenumber_field",
 ]
