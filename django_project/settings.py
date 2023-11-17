@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "accounts",
     "pages",
     # "contacts",
+    "news",
 ]
 
 MIDDLEWARE = [

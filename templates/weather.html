@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <h1 style="text-align: center;">Погода по містах України на {{ context_weather }}</h1>
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">На головну</a>
+    <div>
+
+        {% for item in list_weather %}
+        <h3>{{ item.city }}</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ранок</th>
+                    <th>день</th>
+                    <th>вечір</th>
+                </tr>
+            </thead>            
+            <tbody>
+                <tr>
+                    <td>Температура, °C</td>
+                    <td>{{ item.morning_t }}</td>
+                    <td>{{ item.day_t }}</td>
+                    <td>{{ item.night_t }}</td>
+                </tr>
+                <tr>
+                    <td>Тиск, мм</td>
+                    <td>{{ item.tusk_m }}</td>
+                    <td>{{ item.tusk_d }}</td>
+                    <td>{{ item.tusk_n }}</td>
+                </tr>
+                <tr>
+                    <td>Вологість, %</td>
+                    <td>{{ item.vologist_m }}</td>
+                    <td>{{ item.vologist_d }}</td>
+                    <td>{{ item.vologist_n }}</td>
+                </tr>
+                <tr>
+                    <td>Вітер, м/сек</td>
+                    <td>{{ item.viter_m }}</td>
+                    <td>{{ item.viter_d }}</td>
+                    <td>{{ item.viter_n }}</td>
+                </tr>
+                <tr>
+                    <td>Ймовірність опадів, %</td>
+                    <td>{{ item.opadu_m }}</td>
+                    <td>{{ item.opadu_d }}</td>
+                    <td>{{ item.opadu_n }}</td>
+                </tr>
+            </tbody>
+        </table>
+        {% endfor %}
+
+    </div>
+
+{% endblock content %}
