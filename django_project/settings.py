@@ -94,7 +94,7 @@ DB_HOST = env.str("DB_HOST")
 DB_PORT = env.str("DB_PORT")
 
 
- DATABASES = {
+DATABASES = {
      "default": {
          "ENGINE": "django.db.backends.postgresql_psycopg2",
          "NAME": DB_NAME,
