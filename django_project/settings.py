@@ -29,8 +29,9 @@ SECRET_KEY = env.str("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
-ALLOWED_HOSTS = ["*"]
-
+# ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["goit-personal-assistant.fly.dev", "localhost", "127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ["https://goit-personal-assistant.fly.dev"]
 
 # Application definition
 
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     # 3rd Party
     "crispy_forms",
@@ -48,7 +50,6 @@ INSTALLED_APPS = [
     "accounts",
     "pages",
     "contacts",
-    "notes",
     # Other apps…
     "phonenumber_field",
 ]
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -93,17 +95,19 @@ DB_PASSWORD = env.str("DB_PASSWORD")
 DB_HOST = env.str("DB_HOST")
 DB_PORT = env.str("DB_PORT")
 
+default_db = {
+    "ENGINE": "django.db.backends.postgresql_psycopg2",
+    "NAME": DB_NAME,
+    "USER": DB_USER,
+    "PASSWORD": DB_PASSWORD,
+    "HOST": DB_HOST,
+    "PORT": DB_PORT,
+}
 
- DATABASES = {
-     "default": {
-         "ENGINE": "django.db.backends.postgresql_psycopg2",
-         "NAME": DB_NAME,
-         "USER": DB_USER,
-         "PASSWORD": DB_PASSWORD,
-         "HOST": DB_HOST,
-         "PORT": DB_PORT,
-     }
- }
+DATABASES = {
+    "default": env.dj_db_url("DATABASE_URL", default=default_db),
+    # "default": default_db,
+}
 
 
 # Password validation
@@ -143,6 +147,12 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    },
+}
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"

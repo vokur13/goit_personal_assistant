@@ -170,5 +170,8 @@ cython_debug/
 
 test.py
 test_2.py
+test_3.py
 test_date.py
-./scripts/populate_data.py
+./scripts
+
+*.sqlite3
