@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Contacts{% endblock title %}
+
+{% block content %}
+
+    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ПРІЗВИЩЕ</th>
+      <th scope="col">ІМ'Я</th>
+      <th scope="col">ЕЛЕКТРОННА ПОШТА</th>
+        <th scope="col"><a href="{% url 'dob_list' %}">ДАТА НАРОДЖЕННЯ</a></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for contact in contact_list %}
+      {% if contact.owner.pk == request.user.pk %}
+    <tr>
+        <td><a href="{{ contact.get_absolute_url }}">{{ contact.last_name }}</a></td>
+        <td>{{ contact.first_name }}</td>
+        <td><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></td>
+        <td>{{ contact.dob|date:"d-m-Y" }}</td>
+        <td><a href="{{ contact.get_absolute_url }}">Новий номер телефону</a></td>
+        <td><a href="{% url 'contact_edit' contact.pk %}">Редагувати</a></td>
+        <td><a href="{% url 'contact_delete' contact.pk %}">Видалити</a></td>
+    </tr>
+      {% endif %}
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}
+
+
+

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="article-entry">
+    <h2>{{ contact.last_name }}, {{ contact.first_name }}</h2>
+    <h5>Адреса</h5>
+    <p>{{ contact.address }}</p>
+    {% if contact.avatar %}
+        <img src="{{ contact.avatar.url }}" alt="{{ contact.first_name }}{{ contact.last_name }}">
+    {% endif %}
+    <h5>Електронна пошта</h5>
+    <p><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></p>
+        <h5>Номери телефонів</h5>
+        {% for phone_number in contact.phonenumber_set.all %}
+            <p><a href="tel:{{ phone_number }}">{{ phone_number }}</a></p>
+        {% endfor %}
+    <h6>Додайте новий номер телефону</h6>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-success ml-2" type="submit">Зберегти</button>
+        </form>
+    <h5>Дата народження</h5>
+    <p>{{ contact.dob|date:"d-m-Y" }}</p>
+    <h5>Примітки</h5>
+    <p>{{ contact.notes }}</p>
+    </div>
+    <div>
+        <p><a href="{% url 'contact_edit' contact.pk %}">Редагувати</a></p>
+        <p><a href="{% url 'contact_delete' contact.pk %}">Видалити</a></p>
+        <p>Повертатися до <a href="{% url 'contact_list' %}">Список контактів</a>.</p>
+    </div>
+
+{% endblock content %}

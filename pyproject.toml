@@ -13,6 +13,12 @@ environs = "^9.5.0"
 psycopg2-binary = "^2.9.9"
 django-crispy-forms = "^2.1"
 crispy-bootstrap5 = "^2023.10"
+pillow = "^10.1.0"
+faker = "^20.0.0"
+transliterate = "^1.10.2"
+django-birthday = "^0.1.4"
+dj-database-url = "^2.1.0"
+dj-email-url = "^1.0.6"
 
 
 [build-system]

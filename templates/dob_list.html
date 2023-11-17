@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %}Coming Birthday List{% endblock title %}
+
+{% block content %}
+    <h2>Список майбутніх днів народження</h2>
+        <h6>для наступних {{ interval }} днів</h6>
+
+    <table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">ПРІЗВИЩЕ</th>
+        <th scope="col">ІМ'Я</th>
+        <th scope="col">ДАТА НАРОДЖЕННЯ
+            <form action="{% url 'dob_list' %}" method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button class="btn btn-secondary ml2" type="submit">Надіслати</button>
+            </form>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for contact in contact_list%}
+        {% if contact.owner.pk == request.user.pk %}
+        <tr>
+        <td><a href="{{ contact.get_absolute_url }}">{{ contact.last_name }}</a></td>
+        <td>{{ contact.first_name }}</td>
+        <td>{{ contact.dob|date:"d-m-Y" }}</td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+    </table>
+     <div>
+        <p>Повертатися до <a href="{% url 'contact_list' %}">Список контактів</a>.</p>
+    </div>
+
+{% endblock content %}
+
