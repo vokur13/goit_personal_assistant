@@ -13,7 +13,6 @@ environs = "^9.5.0"
 psycopg2-binary = "^2.9.9"
 django-crispy-forms = "^2.1"
 crispy-bootstrap5 = "^2023.10"
-django-phonenumber-field = {extras = ["phonenumbers"], version = "^7.2.0"}
 pillow = "^10.1.0"
 faker = "^20.0.0"
 transliterate = "^1.10.2"

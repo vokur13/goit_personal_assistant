@@ -3,10 +3,10 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>New Contact</h1>
+<h1>Новий контакт</h1>
     <form action="" method="post">
     {% csrf_token %}
     {{ form|crispy }}
-    <button class="btn btn-success ml-2" type="submit">Save</button>
+    <button class="btn btn-success ml-2" type="submit">Зберегти</button>
     </form>
 {% endblock content %}

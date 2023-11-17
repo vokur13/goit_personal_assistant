@@ -7,11 +7,10 @@
     <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col">LAST NAME</th>
-      <th scope="col">FIRST NAME</th>
-      <th scope="col">E-MAIL</th>
-        <th scope="col"><a href="{% url 'dob_list' %}">DOB</a></th>
-{#        <th scope="col">DOB</th>#}
+      <th scope="col">ПРІЗВИЩЕ</th>
+      <th scope="col">ІМ'Я</th>
+      <th scope="col">ЕЛЕКТРОННА ПОШТА</th>
+        <th scope="col"><a href="{% url 'dob_list' %}">ДАТА НАРОДЖЕННЯ</a></th>
         <th scope="col"></th>
         <th scope="col"></th>
         <th scope="col"></th>
@@ -24,11 +23,10 @@
         <td><a href="{{ contact.get_absolute_url }}">{{ contact.last_name }}</a></td>
         <td>{{ contact.first_name }}</td>
         <td><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></td>
-        <td>{{ contact.dob }}</td>
-        <td><a href="{{ contact.get_absolute_url }}">New Phone Number</a></td>
-        <td><a href="{% url 'contact_edit' contact.pk %}">Edit</a></td>
-        <td><a href="{% url 'contact_delete' contact.pk %}">Delete</a></td>
-
+        <td>{{ contact.dob|date:"d-m-Y" }}</td>
+        <td><a href="{{ contact.get_absolute_url }}">Новий номер телефону</a></td>
+        <td><a href="{% url 'contact_edit' contact.pk %}">Редагувати</a></td>
+        <td><a href="{% url 'contact_delete' contact.pk %}">Видалити</a></td>
     </tr>
       {% endif %}
   {% endfor %}
