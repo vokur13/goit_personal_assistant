@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h1 style="text-align: center;">{{ news_title }}</h1>
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">На головну</a>
+    <ul>
+        {% for news_item in list_news %}
+            <li>
+                <h3>{{ news_item.title }}</h3>
+                <p>Джерело: {{ news_item.source }}</p>
+                <a target='_blank' rel='norefferer noopener' href="{{ news_item.link }}" class="btn btn-primary">Читати</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if list_news.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ list_news.previous_page_number }}">Previous</a>
+                </li>
+            {% endif %}
+            
+            {% for i in list_news.paginator.page_range %}
+                <li class="page-item {% if list_news.number == i %}active{% endif %}">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+            {% endfor %}
+            
+            {% if list_news.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ list_news.next_page_number }}">Next</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+{% endblock content %}
