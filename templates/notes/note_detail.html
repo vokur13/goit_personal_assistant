@@ -14,8 +14,8 @@
       <span>{{ tag.name }}</span>
     {% endfor %}
   </p>
-  <!-- Вывод времени создания -->
-  <p><strong>Створено:</strong> {{ note.created }}</p>
+  <!-- Форматування дати -->
+  <p><strong>Створено:</strong> {{ note.created|date:'d-m-Y H:i:s' }}</p>
 
   <p><a href="{% url 'notes:note_edit' note.id %}">Змінити нотатку</a></p>
   <p><a href="{% url 'notes:note_list' %}">Назад</a></p>
