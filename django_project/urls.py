@@ -30,4 +30,5 @@ urlpatterns = [
     # Local apps
     path("contacts/", include("contacts.urls")),
     path("", include("pages.urls")),
+    path("uploader/", include("uploader.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
