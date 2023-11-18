@@ -175,3 +175,6 @@ test_date.py
 ./scripts
 
 *.sqlite3
+
+fly.toml
+**/.env

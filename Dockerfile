@@ -1,29 +1,26 @@
 ARG PYTHON_VERSION=3.12-slim-bullseye
+#ARG PYTHON_VERSION=3.10
 
 FROM python:${PYTHON_VERSION}
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+# Встановимо змінну середовища
+ENV APP_HOME /app
 
-# install psycopg2 dependencies.
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
+# Встановимо робочу директорію всередині контейнера
+WORKDIR $APP_HOME
 
-RUN mkdir -p /code
+COPY poetry.lock $APP_HOME/poetry.lock
+COPY pyproject.toml $APP_HOME/pyproject.toml
 
-WORKDIR /code
-
+# Встановимо залежності всередині контейнера
 RUN pip install poetry
-COPY pyproject.toml poetry.lock /code/
-RUN poetry config virtualenvs.create false
-RUN poetry install --only main --no-root --no-interaction
-COPY . /code
+RUN poetry config virtualenvs.create false && poetry install --only main
 
-ENV SECRET_KEY "qiRIha0kvLAecjY9O0xOXnKxbZFcKClWyysvl8JRXa8pkSKRRt"
-RUN python manage.py collectstatic --noinput
+# Скопіюємо інші файли в робочу директорію контейнера
+COPY . .
 
+# Позначимо порт, де працює застосунок всередині контейнера
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "django_project.wsgi"]
+# Запустимо наш застосунок всередині контейнера
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

@@ -1,5 +1,4 @@
-.venv
-__pycache__
+fly.toml
+.git/
 *.sqlite3
-.git
-.env
+**/.env

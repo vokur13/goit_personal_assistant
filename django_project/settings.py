@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from environs import Env
+import dj_database_url
 
 env = Env()
 env.read_env()
@@ -24,14 +25,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str("DJANGO_SECRET_KEY")
+SECRET_KEY = env.str("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=False)
 
 # ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS = ["goit-personal-assistant.fly.dev", "localhost", "127.0.0.1"]
-CSRF_TRUSTED_ORIGINS = ["https://goit-personal-assistant.fly.dev"]
+ALLOWED_HOSTS = ["django-project.fly.dev", "localhost", "127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ["https://django-project.fly.dev", "http://localhost"]
 
 # Application definition
 
@@ -50,9 +51,9 @@ INSTALLED_APPS = [
     "accounts",
     "pages",
     "contacts",
-    "notes"
-    # Other apps…
-    "phonenumber_field",
+    "notes",
+    "uploader",
+    # Other apps
 ]
 
 MIDDLEWARE = [
@@ -96,18 +97,25 @@ DB_PASSWORD = env.str("DB_PASSWORD")
 DB_HOST = env.str("DB_HOST")
 DB_PORT = env.str("DB_PORT")
 
-default_db = {
-    "ENGINE": "django.db.backends.postgresql_psycopg2",
-    "NAME": DB_NAME,
-    "USER": DB_USER,
-    "PASSWORD": DB_PASSWORD,
-    "HOST": DB_HOST,
-    "PORT": DB_PORT,
-}
+# default_db = {
+#     "ENGINE": "django.db.backends.postgresql_psycopg2",
+#     "NAME": DB_NAME,
+#     "USER": DB_USER,
+#     "PASSWORD": DB_PASSWORD,
+#     "HOST": DB_HOST,
+#     "PORT": DB_PORT,
+# }
 
 DATABASES = {
-    "default": env.dj_db_url("DATABASE_URL", default=default_db),
-    # "default": default_db,
+    # "default": env.dj_db_url("DATABASE_URL", default=default_db),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": DB_NAME,
+        "USER": DB_USER,
+        "PASSWORD": DB_PASSWORD,
+        "HOST": DB_HOST,
+        "PORT": DB_PORT,
+    }
 }
 
 

@@ -1,11 +1,12 @@
 from django.db import models
 from django_project import settings
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=25, null=False)
 
     class Meta:
-        verbose_name_plural = 'Tags'
+        verbose_name_plural = "Tags"
 
     def __str__(self):
         return self.name
@@ -20,8 +21,7 @@ class Note(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name_plural = 'Notes'
+        verbose_name_plural = "Notes"
 
     def __str__(self):
         return self.name
-    
