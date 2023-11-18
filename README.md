@@ -1,3 +1,7 @@
+# poetry export --without-hashes --format=requirements.txt > requirements.txt
+
+# python -c 'import secrets; print(secrets.token_urlsafe())'
+
 # goit_personal_assistant
 
 В одном уровне с модулем manage.py небходимо добавить файл .env, 
@@ -7,12 +11,12 @@
 DEBUG=True
 DJANGO_SECRET_KEY=<...>
 
-# ElephantSQL
+<!-- # ElephantSQL
 DB_NAME=<...>
 DB_USER=<...>
 DB_PASSWORD=<...>
 DB_HOST=<...>
-DB_PORT=5432
+DB_PORT=5432 -->
 
 # Email
 EMAIL_HOST=<...>

@@ -2,11 +2,11 @@
 
 {% block content %}
 
-    <h1>Delete</h1>
+    <h1>Видалити</h1>
     <form action="" method="post">
     {% csrf_token %}
-    <p>Are You sure You want to delete "{{ contact.last_name }}, {{ contact.first_name }}"?</p>
-    <button class="btn btn-danger ml-2" type="submit">Confirm</button>
+    <p>Ви впевнені, що хочете видалити "{{ contact.last_name }}, {{ contact.first_name }}"?</p>
+    <button class="btn btn-danger ml-2" type="submit">Підтвердити</button>
     </form>
 
 {% endblock content %}

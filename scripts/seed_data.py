@@ -5,7 +5,7 @@ import django
 
 from faker import Faker
 from transliterate import translit
-from phonenumber_field.phonenumber import PhoneNumber as PhNu
+from phonenumber_field.phonenumber import PhoneNumber as ph_nu
 
 from django_project.settings import env
 
@@ -72,7 +72,7 @@ async def create_phone_number():
     contacts = Contact.objects.all()
     for contact in contacts:
         number = f"+380{fake.msisdn()[4:]}"
-        number_reg = PhNu.from_string(number, region="UA")
+        number_reg = ph_nu.from_string(number, region="UA")
         row = PhoneNumber.objects.create(
             phone_number=number_reg.as_e164, contact=contact
         )
