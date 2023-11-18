@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # Local
     "accounts",
     "pages",
+    "news",
     "contacts",
     "notes",
     "uploader",
