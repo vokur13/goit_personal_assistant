@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Подтверждение удаления заметки</title>
+    <title>Підтвердження видалення нотатки</title>
 </head>
 <body>
-    <h1>Вы уверены, что хотите удалить эту заметку?</h1>
+    <h1>Ви впевнені, що хочете видалити цю нотатку?</h1>
     
     <form method="post">
         {% csrf_token %}
-        <input type="submit" value="Да, удалить">
+        <input type="submit" value="Так, видалити">
     </form>
 
     <!-- Кнопка для отмены удаления и возврата к списку заметок -->
-    <a href="{% url 'notes:note_list' %}">Отмена</a>
+    <a href="{% url 'notes:note_list' %}">Відмінити</a>
 </body>
 </html>

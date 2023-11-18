@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %}Coming Birthday List{% endblock title %}
+
+{% block content %}
+    <h2>Пошук контактів</h2>
+    <table class="table table-striped">
+    <thead>
+        <form action="{% url 'search_list' %}" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-secondary ml2" type="submit">Пошук</button>
+        </form>
+    <tr>
+        <th scope="col">ПРІЗВИЩЕ</th>
+        <th scope="col">ІМ'Я</th>
+        <th scope="col">ЕЛЕКТРОННА ПОШТА</th>
+        <th scope="col">ДАТА НАРОДЖЕННЯ</th>
+        <th scope="col">ТЕЛЕФОН</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for contact in contact_list%}
+        {% if contact.owner.pk == request.user.pk %}
+        <tr>
+        <td><a href="{{ contact.get_absolute_url }}">{{ contact.last_name }}</a></td>
+        <td>{{ contact.first_name }}</td>
+        <td>{{ contact.dob|date:"d-m-Y" }}</td>
+        <td>{{ contact.email }}</td>
+        <td>
+            {% for phone_number in contact.phonenumber_set.all %}
+            <p><a href="tel:{{ phone_number }}">{{ phone_number }}</a></p>
+            {% endfor %}
+        </td>
+        </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+    </table>
+     <div>
+        <p>Повертатися до <a href="{% url 'contact_list' %}">Список контактів</a>.</p>
+    </div>
+
+{% endblock content %}
