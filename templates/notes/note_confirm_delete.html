@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение удаления заметки</title>
+</head>
+<body>
+    <h1>Вы уверены, что хотите удалить эту заметку?</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Да, удалить">
+    </form>
+
+    <!-- Кнопка для отмены удаления и возврата к списку заметок -->
+    <a href="{% url 'notes:note_list' %}">Отмена</a>
+</body>
+</html>

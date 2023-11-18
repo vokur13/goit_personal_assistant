@@ -28,7 +28,7 @@ class Contact(models.Model):
         self.email = self.email.lower().strip()  # Reduces junk to ""
         if self.email != "":  # If it's not blank
             if not re.match(regex_email, self.email):  # If it's not an email address
-                raise ValidationError("%s is not an email address, dummy!" % self.email)
+                raise ValidationError("%s це не адреса електронної пошти!" % self.email)
         if self.email == "":
             self.email = None
         super(Contact, self).save(*args, **kwargs)
@@ -51,7 +51,7 @@ class PhoneNumber(models.Model):
                 regex_phone_number, self.phone_number
             ):  # If it's not a phone number
                 raise ValidationError(
-                    "%s is not valid phone number, dummy!" % self.phone_number
+                    "%s недійсний номер телефону!" % self.phone_number
                 )
         if self.phone_number == "":
             self.phone_number = None

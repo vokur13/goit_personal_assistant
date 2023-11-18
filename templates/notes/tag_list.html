@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Tag List{% endblock title %}
+
+{% block content %}
+  <h2>Tag List</h2>
+
+  <!-- Кнопка для создания нового тега -->
+  <a href="{% url 'notes:tag_create' %}" class="btn btn-primary mb-3">Create New Tag</a>
+
+  <ul>
+    {% for tag in tags %}
+      <li>
+        <a href="{% url 'notes:tag_edit' pk=tag.pk %}">{{ tag.name }}</a>
+
+        <!-- Кнопка для удаления тега -->
+        <form method="post" action="{% url 'notes:tag_delete' pk=tag.pk %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger btn-sm ml-2">Delete</button>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <!-- Кнопка для возврата на список заметок -->
+  <a href="{% url 'notes:note_list' %}" class="btn btn-secondary">Back to Note List</a>
+{% endblock %}
