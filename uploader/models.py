@@ -9,7 +9,7 @@ def get_file_extension(filename):
 class File(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     file = models.FileField(upload_to='user_uploads/')
-    category = models.CharField(max_length=255)
+    category = models.CharField(max_length=10, choices=[('image', 'Image'), ('video', 'Video'), ('document', 'Document')])
     extension = models.CharField(max_length=10, blank=True, null=True)
 
     def save(self, *args, **kwargs):
