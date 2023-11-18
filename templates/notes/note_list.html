@@ -24,34 +24,48 @@
     <button type="submit" class="btn btn-primary">Знайти</button>
   </form>
 
-  <!-- Список заметок -->
-  <ul>
+<!-- Список заметок -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>Готово</th>
+      <th>Назва</th>
+      <th>Теги</th>
+      <th>Створено</th>
+      <th>Дії</th>
+    </tr>
+  </thead>
+  <tbody>
     {% for note in notes %}
-      <li>
-        <form method="post" action="{% url 'notes:toggle_done' note.id %}">
-          {% csrf_token %}
-          <input type="checkbox" name="done" {% if note.done %}checked{% endif %} onchange="this.form.submit()">
-          <input type="hidden" name="current_done" value="{{ note.done }}">
-        </form>
-        <a href="{% url 'notes:note_detail' note.id %}">{{ note.name }}</a>
-  
-        <!-- Отображение тега для каждой заметки -->
-        Тег:
-        {% for tag in note.tags.all %}
-          <span>{{ tag.name }}</span>
-        {% endfor %}
-        <!-- Вывод времени создания -->
-        <p>Створено: {{ note.created }}</p>
-        <a href="{% url 'notes:note_edit' note.id %}">Змінити</a>
-        <a href="{% url 'notes:note_delete' note.id %}">Видалити</a>
-      </li>
+      <tr>
+        <td>
+          <form method="post" action="{% url 'notes:toggle_done' note.id %}">
+            {% csrf_token %}
+            <input type="checkbox" name="done" {% if note.done %}checked{% endif %} onchange="this.form.submit()">
+            <input type="hidden" name="current_done" value="{{ note.done }}">
+          </form>
+        </td>
+        <td><a href="{% url 'notes:note_detail' note.id %}">{{ note.name }}</a></td>
+        <td>
+          {% for tag in note.tags.all %}
+            <span>{{ tag.name }}</span>
+          {% endfor %}
+        </td>
+        <!-- Форматування дати та часу -->
+        <td>{{ note.created|date:"d-m-Y H:i" }}</td>
+        <td>
+          <a href="{% url 'notes:note_edit' note.id %}" class="btn btn-primary btn-sm me-2">Змінити</a>
+          <a href="{% url 'notes:note_delete' note.id %}" class="btn btn-danger btn-sm">Видалити</a>
+        </td>
+      </tr>
     {% endfor %}
-  </ul>
+  </tbody>
+</table>
 
   <!-- Ссылка на создание новой заметки -->
   <a href="{% url 'notes:note_create' %}" class="btn btn-primary mt-3">Створити нову нотатку</a>
 
-  <!-- Список доступных тегов и кнопка для перехода на страницу с тегами -->
+  <!-- Список доступных тегов і кнопка для переходу на сторінку з тегами -->
   <div class="mt-3">
     <h2>Доступні теги</h2>
     <ul>
@@ -61,5 +75,4 @@
     </ul>
     <a href="{% url 'notes:tag_list' %}" class="btn btn-secondary">Список тегів</a>
   </div>
-
 {% endblock content %}
