@@ -1,4 +1,41 @@
-header {
-    /*background-color: red;*/
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /*margin: 0;*/
+    padding: 0;
 }
 
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+
+main {
+    flex: 1;
+    margin-top: 70px;
+    padding: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+footer ul {
+    display: flex;
+    justify-content: space-around;
+    list-style-type: none;
+}
+
+footer li a {
+    color: white;
+}

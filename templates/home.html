@@ -6,8 +6,13 @@
     {% if user.is_authenticated %}
         <p>Привіт, {{ user.username }}!</p>
         <p><a href="{% url 'logout' %}">Вийти</a></p>
-        <p><a href="{% url 'contact_list' %}" class="btn btn-primary btn-lg" role="button">Переглянути всі контакти</a></p>
-        {% else %}
+        <p><a href="{% url 'contact_list' %}" class="btn btn-primary btn-lg w-25" role="button">Переглянути
+            всі контакти</a>
+        </p>
+        <p><a href="{% url 'notes:note_list' %}" class="btn btn-primary btn-lg w-25" role="button">Переглянути
+            всі
+            нотатки</a></p>
+    {% else %}
         <p>Ви не ввійшли в систему</p>
         <a href="{% url 'login' %}">Увійти</a> |
         <a href="{% url 'signup' %}">Зареєструватися</a>
