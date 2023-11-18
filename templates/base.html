@@ -19,6 +19,7 @@
     }
   </style>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/notes/notes.css' %}">
 </head>
 
 <body>
@@ -60,8 +61,7 @@
       </div>
       {% else %}
       <div class="text-end">
-        <a href="{% url 'login' %}" class="btn btn-outline-primary me-2">
-          Log In</a>
+        <a href="{% url 'login' %}" class="btn btn-outline-primary me-2">Увійти</a>
         <a href="{% url 'signup' %}" class="btn btn-primary">Зареєструватися</a>
       </div>
       {% endif %}
