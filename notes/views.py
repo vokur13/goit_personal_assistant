@@ -3,7 +3,6 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.views.decorators.http import require_POST
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
 
 from .models import Note, Tag
 from .forms import NoteForm, TagForm
@@ -22,7 +21,7 @@ class NoteListView(LoginRequiredMixin, ListView):
         queryset = Note.objects.all()
 
         if note_query:
-            queryset = queryset.filter(Q(name__icontains=note_query) | Q(description__icontains=note_query))
+            queryset = queryset.filter(name__icontains=note_query)
 
         if tag_query:
             queryset = queryset.filter(tags__name__icontains=tag_query)

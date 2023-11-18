@@ -101,28 +101,23 @@ WSGI_APPLICATION = "django_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DB_NAME = env.str("DB_NAME")
-# DB_USER = env.str("DB_USER")
-# DB_PASSWORD = env.str("DB_PASSWORD")
-# DB_HOST = env.str("DB_HOST")
-# DB_PORT = env.str("DB_PORT")
 
-# default_db = {
-#     "ENGINE": "django.db.backends.postgresql_psycopg2",
-#     "NAME": DB_NAME,
-#     "USER": DB_USER,
-#     "PASSWORD": DB_PASSWORD,
-#     "HOST": DB_HOST,
-#     "PORT": DB_PORT,
-# }
+DB_NAME = env.str("DB_NAME")
+DB_USER = env.str("DB_USER")
+DB_PASSWORD = env.str("DB_PASSWORD")
+DB_HOST = env.str("DB_HOST")
+DB_PORT = env.str("DB_PORT")
 
 DATABASES = {
-    # "default": env.dj_db_url("DATABASE_URL", default=default_db),
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+     "default": {
+         "ENGINE": "django.db.backends.postgresql_psycopg2",
+         "NAME": DB_NAME,
+         "USER": DB_USER,
+         "PASSWORD": DB_PASSWORD,
+         "HOST": DB_HOST,
+         "PORT": DB_PORT,
+     }
+ }
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': "dwu51daym",

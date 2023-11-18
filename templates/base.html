@@ -53,14 +53,11 @@
 
       <ul class="nav col-12 col-lg-auto ms-lg-auto mb-2 justify-content-center mb-md-0">
         {% if user.is_authenticated %}
-
-        <li><a href="{% url 'contact_new' %}" class="nav-link px-2 link-dark">+ Новий контакт</a></li>
+        
+        <li><a href="{% url 'notes:note_list' %}" class="nav-link px-2 link-dark">+ Нотатки</a></li>
         <li><a href="{% url 'file_list' %}" class="nav-link px-2 link-dark">Всі файли</a></li>
         <li><a href="{% url 'upload_file' %}" class="nav-link px-2 link-dark">Завантажити файл</a></li>
-
-        
         <li><a href="{% url 'contact_new' %}" class="nav-link px-2 link-dark">+ Новий Контакт</a></li>
-
       </ul>
       <div class="dropdown text-end">
         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
