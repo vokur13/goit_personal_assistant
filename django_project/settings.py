@@ -12,7 +12,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from environs import Env
+
+import cloudinary
+
 import dj_database_url
+
 
 env = Env()
 env.read_env()
@@ -52,8 +56,13 @@ INSTALLED_APPS = [
     "pages",
     "news",
     "contacts",
-    "notes",
+
+    # Other apps…
+    "phonenumber_field",
     "uploader",
+    'cloudinary_storage',
+    'cloudinary',
+    "notes",
     # Other apps
 ]
 
@@ -92,33 +101,30 @@ WSGI_APPLICATION = "django_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DB_NAME = env.str("DB_NAME")
 DB_USER = env.str("DB_USER")
 DB_PASSWORD = env.str("DB_PASSWORD")
 DB_HOST = env.str("DB_HOST")
 DB_PORT = env.str("DB_PORT")
 
-# default_db = {
-#     "ENGINE": "django.db.backends.postgresql_psycopg2",
-#     "NAME": DB_NAME,
-#     "USER": DB_USER,
-#     "PASSWORD": DB_PASSWORD,
-#     "HOST": DB_HOST,
-#     "PORT": DB_PORT,
-# }
-
 DATABASES = {
-    # "default": env.dj_db_url("DATABASE_URL", default=default_db),
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": DB_NAME,
-        "USER": DB_USER,
-        "PASSWORD": DB_PASSWORD,
-        "HOST": DB_HOST,
-        "PORT": DB_PORT,
-    }
-}
+     "default": {
+         "ENGINE": "django.db.backends.postgresql_psycopg2",
+         "NAME": DB_NAME,
+         "USER": DB_USER,
+         "PASSWORD": DB_PASSWORD,
+         "HOST": DB_HOST,
+         "PORT": DB_PORT,
+     }
+ }
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': "dwu51daym",
+    'API_KEY': "419691218689934",
+    'API_SECRET': "1zbqd9f1ptwFtG1yEAGuoCuLXUQ",
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -198,3 +204,13 @@ VALIDATE_CERTS = False
 EMAIL_HOST_USER = EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+
+
+
+# cloudinary.config( 
+#   cloud_name = "dwu51daym", 
+#   api_key = "419691218689934", 
+#   api_secret = "1zbqd9f1ptwFtG1yEAGuoCuLXUQ" 
+# )

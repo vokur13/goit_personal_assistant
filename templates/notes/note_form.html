@@ -11,9 +11,9 @@
 {% block content %}
   <h1>
     {% if note.id %}
-      Edit Note
+      Змінити нотатку
     {% else %}
-      Create New Note
+      Створити нову нотатку
     {% endif %}
   </h1>
 
@@ -21,8 +21,8 @@
     {% csrf_token %}
     {{ form.as_p }}
 
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-primary">Зберегти</button>
   </form>
 
-  <a href="{% url 'notes:note_list' %}" class="btn btn-secondary mt-3">Cancel</a>
+  <a href="{% url 'notes:note_list' %}" class="btn btn-secondary mt-3">Скасувати</a>
 {% endblock content %}

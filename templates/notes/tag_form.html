@@ -3,11 +3,11 @@
 {% block title %}Edit Tag{% endblock title %}
 
 {% block content %}
-  <h2>Edit Tag</h2>
+  <h2>Управління тегами</h2>
   <form method="post" action="">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save changes</button>
+    <button type="submit">Зберегти</button>
   </form>
-  <a href="{% url 'notes:tag_list' %}">Cancel</a>
+  <a href="{% url 'notes:tag_list' %}">Скасувати</a>
 {% endblock %}
