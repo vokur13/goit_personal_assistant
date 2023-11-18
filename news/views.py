@@ -100,6 +100,8 @@ def weather(request):
 		t2 = tr.find('td', class_='p4 bR')
 		t3 = tr.find('td', class_='p5')
 		t4 = tr.find('td', class_='p6 bR')
+		if not t4:
+			t4 = tr.find('td', class_= 'p6 bR cur')
 		t5 = tr.find('td', class_='p7')
 		t6 = tr.find('td', class_='p8')
 		morning_t = t1.text + '...' + t2.text
