@@ -28,23 +28,23 @@
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
         <a class="navbar-brand" href="{% url 'home' %}">Personal Assistant</a>
 
-        <div class="ms-auto"> <!-- Добавлен класс ms-auto для блока с кнопками -->
-            <a href="{% url 'news:rates' %}" class="btn btn-primary">Курси валют</a>
-            <a href="{% url 'news:weather' %}" class="btn btn-primary">Погода</a>
-        </div>
+        {#        <div class="ms-auto"> <!-- Добавлен класс ms-auto для блока с кнопками -->#}
+        {#            <a href="{% url 'news:rates' %}" class="btn btn-primary">Курси валют</a>#}
+        {#            <a href="{% url 'news:weather' %}" class="btn btn-primary">Погода</a>#}
+        {#        </div>#}
 
         <!-- Добавляем кнопку "Новини" -->
-        <div class="dropdown ms-auto mt-3">
-            <button class="btn btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Новини
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="{% url 'news:show' category='politics' %}">Політика</a></li>
-                <li><a class="dropdown-item" href="{% url 'news:show' category='economics' %}">Економіка</a></li>
-                <li><a class="dropdown-item" href="{% url 'news:show' category='science' %}">Наука</a></li>
-                <li><a class="dropdown-item" href="{% url 'news:show' category='sport' %}">Спорт</a></li>
-                <li><a class="dropdown-item" href="{% url 'news:show' category='health' %}">Здоров’я</a></li>
-            </ul>
-        </div>
+        {#        <div class="dropdown ms-auto mt-3">#}
+        {#            <button class="btn btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Новини#}
+        {#            </button>#}
+        {#            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">#}
+        {#                <li><a class="dropdown-item" href="{% url 'news:show' category='politics' %}">Політика</a></li>#}
+        {#                <li><a class="dropdown-item" href="{% url 'news:show' category='economics' %}">Економіка</a></li>#}
+        {#                <li><a class="dropdown-item" href="{% url 'news:show' category='science' %}">Наука</a></li>#}
+        {#                <li><a class="dropdown-item" href="{% url 'news:show' category='sport' %}">Спорт</a></li>#}
+        {#                <li><a class="dropdown-item" href="{% url 'news:show' category='health' %}">Здоров’я</a></li>#}
+        {#            </ul>#}
+        {#        </div>#}
 
         <ul class="nav col-12 col-lg-auto ms-lg-auto mb-2 justify-content-center mb-md-0">
             {% if user.is_authenticated %}
