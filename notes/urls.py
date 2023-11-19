@@ -15,7 +15,7 @@ from .views import (
 app_name = 'notes'
 
 urlpatterns = [
-    # Заметки
+    # Нотатки
     path('notes/', NoteListView.as_view(), name='note_list'),
     path('notes/<int:pk>/', NoteDetailView.as_view(), name='note_detail'),
     path('notes/create/', NoteCreateView.as_view(), name='note_create'),
