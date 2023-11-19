@@ -9,11 +9,18 @@ class TagForm(ModelForm):
 
 
 class NoteForm(ModelForm):
-    tags = forms.ModelMultipleChoiceField(queryset=Tag.objects.all(), required=False)
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        required=False,
+        widget=forms.SelectMultiple(attrs={'size': 5})
+    )
 
     class Meta:
         model = Note
         fields = ['name', 'description', 'tags']
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 6, 'cols': 50}),
+        }
 
 
 class NoteDoneForm(forms.ModelForm):
