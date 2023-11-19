@@ -3,20 +3,31 @@
 {% block title %}Note Detail{% endblock title %}
 
 {% block content %}
-  <h1>Подробиці нотатки</h1>
-  <p><strong>Назва:</strong> {{ note.name }}</p>
-  <p><strong>Опис:</strong> {{ note.description }}</p>
-  <p><strong>Статус:</strong> {% if note.done %}Готово{% else %}В процесі{% endif %}</p>
+    <style>
+        .description-text {
+            word-wrap: break-word;
+        }
+    </style>
 
-  <!-- Отображение тега для заметки -->
-  <p><strong>Теги:</strong>
-    {% for tag in note.tags.all %}
-      <span>{{ tag.name }}</span>
-    {% endfor %}
-  </p>
-  <!-- Форматування дати -->
-  <p><strong>Створено:</strong> {{ note.created|date:'d-m-Y H:i:s' }}</p>
+    <h1>Подробиці нотатки</h1>
+    <p><strong>Назва:</strong> {{ note.name }}</p>
+    <p><strong>Опис:</strong></p>
+    <p class="description-text">{{ note.description }}</p>
+    <p><strong>Статус:</strong> {% if note.done %}Готово{% else %}В процесі{% endif %}</p>
 
-  <p><a href="{% url 'notes:note_edit' note.id %}">Змінити нотатку</a></p>
-  <p><a href="{% url 'notes:note_list' %}">Назад</a></p>
+    <p><strong>Теги:</strong>
+        {% for tag in note.tags.all %}
+            <span>{{ tag.name }}</span>
+        {% endfor %}
+    </p>
+
+    <p><strong>Створено:</strong> {{ note.created|date:'d-m-Y H:i:s' }}</p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <a href="{% url 'notes:note_edit' note.id %}" class="btn btn-primary">Змінити нотатку</a>
+            <br>
+            <a href="{% url 'notes:note_list' %}" class="btn btn-secondary mt-3">Назад</a>
+        </div>
+    </div>
 {% endblock content %}

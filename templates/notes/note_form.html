@@ -1,28 +1,49 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  {% if note.id %}
-    Edit Note
-  {% else %}
-    Create New Note
-  {% endif %}
+    {% if note.id %}
+        Редагувати нотатку
+    {% else %}
+        Створити нову нотатку
+    {% endif %}
 {% endblock title %}
 
 {% block content %}
-  <h1>
-    {% if note.id %}
-      Змінити нотатку
-    {% else %}
-      Створити нову нотатку
-    {% endif %}
-  </h1>
+    <h1>
+        {% if note.id %}
+            Редагувати нотатку
+        {% else %}
+            Створити нову нотатку
+        {% endif %}
+    </h1>
 
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
+    <div class="row">
+        <div class="col-md-6">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="id_name" class="col-sm-3 col-form-label">Назва:</label>
+                    <div class="col-sm-9">
+                        {{ form.name }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="id_description" class="col-sm-3 col-form-label">Опис:</label>
+                    <div class="col-sm-9">
+                        {{ form.description }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="id_tags" class="col-sm-3 col-form-label">Тег:</label>
+                    <div class="col-sm-9">
+                        {{ form.tags }}
+                    </div>
+                </div>
 
-    <button type="submit" class="btn btn-primary">Зберегти</button>
-  </form>
+                <button type="submit" class="btn btn-primary">Зберегти</button>
+            </form>
+        </div>
+    </div>
 
-  <a href="{% url 'notes:note_list' %}" class="btn btn-secondary mt-3">Скасувати</a>
+    <a href="{% url 'notes:note_list' %}" class="btn btn-secondary mt-3">Скасувати</a>
 {% endblock content %}
