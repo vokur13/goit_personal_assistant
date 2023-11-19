@@ -1,4 +1,5 @@
 {% load static %}
+{#{% load gravatar %}#}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,10 +54,20 @@
                 <li><a href="{% url 'contact_new' %}" class="nav-link px-2 text-white">+ Новий Контакт</a></li>
                 </ul>
                 <div class="dropdown text-end">
-                    <a href="#" class="d-block text-white text-decoration-none dropdown-toggle " id="dropdownUser1"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ user.username }}
-                    </a>
+                    <div class="d-flex align-items-center ms-4">
+                        <div class="border border-white">
+                            {% if user.avatar %}
+                                <img src="{{ user.avatar }}" alt="Avatar" width="50">
+                            {% else %}
+                                <img src="https://www.gravatar.com/avatar/{hash}?d=retro&s=50" alt="Gravatar Avatar">
+                            {% endif %}
+                        </div>
+                        <a href="#" class="ms-2 d-block text-white text-decoration-none dropdown-toggle "
+                           id="dropdownUser1"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ user.username }}
+                        </a>
+                    </div>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                         <li><a class="dropdown-item" href="{% url 'password_change' %}">
                             Змінити пароль</a></li>
@@ -87,7 +98,7 @@
         </ul>
     </div>
 </footer>
-<!-- Bootstrap JavaScript Bundle -->
+{#<!-- Bootstrap JavaScript Bundle -->#}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
