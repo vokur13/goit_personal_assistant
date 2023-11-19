@@ -2,7 +2,7 @@ from django.db import models
 from django_project import settings
 
 class Tag(models.Model):
-    name = models.CharField(max_length=25, null=False)
+    name = models.CharField(max_length=50, null=False)
 
     class Meta:
         verbose_name_plural = 'Tags'
@@ -13,7 +13,7 @@ class Tag(models.Model):
 
 class Note(models.Model):
     name = models.CharField(max_length=50, null=False)
-    description = models.CharField(max_length=150, null=False)
+    description = models.TextField(null=False)
     done = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag)
@@ -24,4 +24,3 @@ class Note(models.Model):
 
     def __str__(self):
         return self.name
-    
