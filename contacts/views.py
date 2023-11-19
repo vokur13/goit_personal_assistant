@@ -1,18 +1,18 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.shortcuts import render
+from django.urls import reverse_lazy, reverse
 from django.views import View
 from django.views.generic import ListView, FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import UpdateView, DeleteView, CreateView
-from django.urls import reverse_lazy, reverse
 
-from .models import Contact
 from .forms import (
     PhoneNumberForm,
     DOBIntervalForm,
-    SearcListForm,
+    SearchListForm,
 )
+from .models import Contact
 
 
 class ContactListView(LoginRequiredMixin, ListView):
@@ -139,17 +139,19 @@ class SearchListView(LoginRequiredMixin, ListView, FormView):
     success_url = reverse_lazy("search_list.html")
 
     def get(self, request, *args, **kwargs):
-        form = SearcListForm()
+        form = SearchListForm()
         return render(request, self.template_name, {"form": form, "contact_list": []})
 
     def post(self, request, *args, **kwargs):
-        form = SearcListForm(request.POST)
+        form = SearchListForm(request.POST)
         if form.is_valid():
             search_last_name = form.cleaned_data["search"]
             search_first_name = form.cleaned_data["search_name"]
             queryset = Contact.objects.filter(
-                Q(owner=request.user) & Q(last_name__icontains=search_last_name) & Q(first_name__icontains=search_first_name)
-            ).order_by("last_name", "first_name")  
+                Q(owner=request.user)
+                & Q(last_name__icontains=search_last_name)
+                & Q(first_name__icontains=search_first_name)
+            ).order_by("last_name", "first_name")
             return render(
                 request,
                 self.template_name,

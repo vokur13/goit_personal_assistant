@@ -11,12 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from environs import Env
 
 import cloudinary
-
 import dj_database_url
-
+from environs import Env
 
 env = Env()
 env.read_env()
@@ -36,7 +34,7 @@ DEBUG = env.bool("DEBUG", default=False)
 
 # ALLOWED_HOSTS = ["*"]
 ALLOWED_HOSTS = ["django-project.fly.dev", "localhost", "127.0.0.1"]
-CSRF_TRUSTED_ORIGINS = ["https://django-project.fly.dev", "http://localhost"]
+CSRF_TRUSTED_ORIGINS = ["https://django-project.fly.dev"]
 
 # Application definition
 
@@ -55,15 +53,13 @@ INSTALLED_APPS = [
     "accounts",
     "pages",
     "news",
+    "notes",
+    "uploader",
     "contacts",
-
     # Other apps…
     "phonenumber_field",
-    "uploader",
-    'cloudinary_storage',
-    'cloudinary',
-    "notes",
-    # Other apps
+    "cloudinary_storage",
+    "cloudinary",
 ]
 
 MIDDLEWARE = [
@@ -109,22 +105,15 @@ DB_HOST = env.str("DB_HOST")
 DB_PORT = env.str("DB_PORT")
 
 DATABASES = {
-     "default": {
-         "ENGINE": "django.db.backends.postgresql_psycopg2",
-         "NAME": DB_NAME,
-         "USER": DB_USER,
-         "PASSWORD": DB_PASSWORD,
-         "HOST": DB_HOST,
-         "PORT": DB_PORT,
-     }
- }
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': "dwu51daym",
-    'API_KEY': "419691218689934",
-    'API_SECRET': "1zbqd9f1ptwFtG1yEAGuoCuLXUQ",
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": DB_NAME,
+        "USER": DB_USER,
+        "PASSWORD": DB_PASSWORD,
+        "HOST": DB_HOST,
+        "PORT": DB_PORT,
+    }
 }
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -205,12 +194,14 @@ EMAIL_HOST_USER = EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
+CLOUD_NAME = env.str("CLOUD_NAME")
+API_KEY = env.str("API_KEY")
+API_SECRET = env.str("API_SECRET")
 
-
-
-# cloudinary.config( 
-#   cloud_name = "dwu51daym", 
-#   api_key = "419691218689934", 
-#   api_secret = "1zbqd9f1ptwFtG1yEAGuoCuLXUQ" 
-# )
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": CLOUD_NAME,
+    "API_KEY": API_KEY,
+    "API_SECRET": API_SECRET,
+}

@@ -6,15 +6,31 @@
     {% if user.is_authenticated %}
         <p>Привіт, {{ user.username }}!</p>
         <p><a href="{% url 'logout' %}">Вийти</a></p>
+        <h3>Ваш Персональний Помічник очікує Ваших доручень. <br> Виберіть додаток:</h3>
         <p><a href="{% url 'contact_list' %}" class="btn btn-primary btn-lg w-25" role="button">Переглянути
             всі контакти</a>
         </p>
         <p><a href="{% url 'notes:note_list' %}" class="btn btn-primary btn-lg w-25" role="button">Переглянути
             всі
             нотатки</a></p>
+        <p><a href="{% url 'file_list' %}" class="btn btn-primary btn-lg w-25" role="button">Переглянути список
+            файлів</a></p>
     {% else %}
         <p>Ви не ввійшли в систему</p>
         <a href="{% url 'login' %}">Увійти</a> |
         <a href="{% url 'signup' %}">Зареєструватися</a>
     {% endif %}
+    <div class="dropdown ms-auto mt-3">
+        <button class="btn btn-primary btn-lg w-25" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Вибрати ленту новостей
+        </button>
+        {#        <p><a href="#" class="btn btn-primary btn-lg w-25" role="button">Вибрати ленту новостей</a></p>#}
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="{% url 'news:show' category='politics' %}">Політика</a></li>
+            <li><a class="dropdown-item" href="{% url 'news:show' category='economics' %}">Економіка</a></li>
+            <li><a class="dropdown-item" href="{% url 'news:show' category='science' %}">Наука</a></li>
+            <li><a class="dropdown-item" href="{% url 'news:show' category='sport' %}">Спорт</a></li>
+            <li><a class="dropdown-item" href="{% url 'news:show' category='health' %}">Здоров’я</a></li>
+        </ul>
+    </div>
 {% endblock content %}
