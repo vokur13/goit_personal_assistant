@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <h1 style="text-align: center;">Курси валют НБУ на {{ list_rates }}</h1>
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">На головну</a>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Код валюти</th>
+                    <th>Назва</th>
+                    <th>Курс</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in list_exchange %}
+                    <tr>
+                        <td>{{ item.currency }}</td>
+                        <td>{{ item.name_currency }}</td>
+                        <td>{{ item.sale }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock content %}

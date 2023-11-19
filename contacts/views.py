@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView, FormView
@@ -10,6 +11,7 @@ from .models import Contact
 from .forms import (
     PhoneNumberForm,
     DOBIntervalForm,
+    SearcListForm,
 )
 
 
@@ -130,3 +132,27 @@ class ContactCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
+
+
+class SearchListView(LoginRequiredMixin, ListView, FormView):
+    template_name = "search_list.html"
+    success_url = reverse_lazy("search_list.html")
+
+    def get(self, request, *args, **kwargs):
+        form = SearcListForm()
+        return render(request, self.template_name, {"form": form, "contact_list": []})
+
+    def post(self, request, *args, **kwargs):
+        form = SearcListForm(request.POST)
+        if form.is_valid():
+            search_last_name = form.cleaned_data["search"]
+            search_first_name = form.cleaned_data["search_name"]
+            queryset = Contact.objects.filter(
+                Q(owner=request.user) & Q(last_name__icontains=search_last_name) & Q(first_name__icontains=search_first_name)
+            ).order_by("last_name", "first_name")  
+            return render(
+                request,
+                self.template_name,
+                {"form": form, "contact_list": queryset},
+            )
+        return render(request, self.template_name, {"form": form, "contact_list": []})

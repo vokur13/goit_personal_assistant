@@ -5,19 +5,19 @@
 {% block title %}Coming Birthday List{% endblock title %}
 
 {% block content %}
-    <h2>Upcoming Birthday List</h2>
-        <h6>for the next {{ interval }} days period</h6>
+    <h2>Список майбутніх днів народження</h2>
+        <h6>для наступних {{ interval }} днів</h6>
 
     <table class="table table-striped">
     <thead>
     <tr>
-        <th scope="col">LAST NAME</th>
-        <th scope="col">FIRST NAME</th>
-        <th scope="col">DOB
+        <th scope="col">ПРІЗВИЩЕ</th>
+        <th scope="col">ІМ'Я</th>
+        <th scope="col">ДАТА НАРОДЖЕННЯ
             <form action="{% url 'dob_list' %}" method="post">
                 {% csrf_token %}
                 {{ form|crispy }}
-                <button class="btn btn-secondary ml2" type="submit">Submit</button>
+                <button class="btn btn-secondary ml2" type="submit">Підтвердити</button>
             </form>
         </th>
     </tr>
@@ -28,14 +28,14 @@
         <tr>
         <td><a href="{{ contact.get_absolute_url }}">{{ contact.last_name }}</a></td>
         <td>{{ contact.first_name }}</td>
-        <td>{{ contact.dob }}</td>
+        <td>{{ contact.dob|date:"d-m-Y" }}</td>
         </tr>
         {% endif %}
     {% endfor %}
     </tbody>
     </table>
      <div>
-        <p>Back to <a href="{% url 'contact_list' %}">Contacts List</a>.</p>
+        <p>Повертатися до <a href="{% url 'contact_list' %}">Список контактів</a>.</p>
     </div>
 
 {% endblock content %}
