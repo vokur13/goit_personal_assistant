@@ -169,6 +169,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.CustomUser"
 
+GRAVATAR_SECURE = True
+GRAVATAR_DEFAULT_SIZE = 150
+
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 
