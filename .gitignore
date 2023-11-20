@@ -168,13 +168,12 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 .idea/
 
-test.py
-test_2.py
-test_3.py
-test_date.py
 ./scripts
 
 *.sqlite3
 
 fly.toml
 **/.env
+
+test_uuid.py
+test_random.py

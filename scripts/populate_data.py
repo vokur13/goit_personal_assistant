@@ -1,107 +1,90 @@
-# import json
 import os
+import re
 import sys
-from datetime import datetime
-
-from faker import Faker
-from transliterate import translit
 
 import django
+import transliterate
+from faker import Faker
+from phonenumber_field.phonenumber import PhoneNumber as ph_nu
 
-from contacts.models import Contact
+from django_project.settings import env
 
-from django.contrib.auth import get_user_model
-
-from django_project.settings import AUTH_USER_MODEL
-
-# from django_project import settings
-
-# os.environ["DJANGO_SETTINGS_MODULE"] = "django_project.settings"
-# sys.path.append(
-#     "/Users/vokur/PycharmProjects/djangoProject/personal_assistant/django_project/django_project"
-# )
+sys.path.append(
+    "/Users/vokur/PycharmProjects/djangoProject/personal_assistant/django_project/django_project"
+)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django_project.settings")
 django.setup()
 
+
+from accounts.models import CustomUser
+from contacts.models import Contact, PhoneNumber
+
 fake = Faker("uk_UA")
+APP_USER_NAME = env.str("APP_USER_NAME")
+NUMBER_OF_CONTACTS = int(env.str("NUMBER_OF_CONTACTS"))
 
 
-def create_contacts():
-    # Contact.objects.all().delete()
+def transliterate_ukrainian_to_english(text):
+    text = text.replace("'", "_")
+    result = transliterate.translit(text.lower(), "uk", reversed=True)
+    return result
 
-    for _ in range(50):
+
+def person_email(first_name, last_name):
+    fake_email = f"{transliterate_ukrainian_to_english(first_name)}.{transliterate_ukrainian_to_english(last_name)}@{fake.free_email_domain()}"
+
+    return fake_email
+
+
+def sanitize_email(email):
+    # Replace special characters with underscores
+    sanitized_email = re.sub(r"[^a-zA-Z0-9.@_]+", "_", email)
+
+    # Ensure the email address starts and ends with alphanumeric characters
+    sanitized_email = re.sub(r"^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$", "", sanitized_email)
+
+    return sanitized_email
+
+
+def create_contact():
+    Contact.objects.all().delete()
+    users = CustomUser.objects.all()
+    for _ in range(NUMBER_OF_CONTACTS):
         first_name = fake.first_name()
         last_name = fake.last_name()
-        first_name_translit = translit(first_name.lower(), "uk", reversed=True)
-        last_name_translit = translit(last_name.lower(), "uk", reversed=True)
+        address = fake.street_address()
+        city = fake.city()
+        full_address = address + ", " + city
+        email = person_email(first_name, last_name)
+        sanitized_email = sanitize_email(email)
         dob = fake.date_of_birth(tzinfo=None, minimum_age=18, maximum_age=65)
         notes = fake.text(max_nb_chars=100)
-    # row = Contact(
-    #     first_name=first_name,
-    #     last_name=last_name,
-    #     email=f"{first_name_translit}.{last_name_translit}@{fake.free_email_domain()}",
-    #     dob=dob,
-    #     notes=notes,
-    #     owner=owner,
-    # )
-    # row.save()
+        for user in users:
+            if user.username == APP_USER_NAME:
+                row = Contact.objects.create(
+                    first_name=first_name,
+                    last_name=last_name,
+                    address=full_address,
+                    email=sanitized_email,
+                    dob=dob,
+                    notes=notes,
+                    owner=user,
+                )
+                row.save()
 
 
-# def create_authors():
-#     Author.objects.all().delete()
-#     with open(author_data, "r") as fa:
-#         data = json.load(fa)
-#
-#         for item in data:
-#             born_date_str = item["born_date"]
-#             born_date = datetime.strptime(born_date_str, "%B %d, %Y")
-#             row = Author(
-#                 fullname=item["fullname"],
-#                 born_date=born_date,
-#                 born_location=item["born_location"],
-#                 biography=item["biography"],
-#             )
-#             row.save()
-#
-#
-# def create_tags():
-#     tags = set()
-#     Tag.objects.all().delete()
-#     with open(quote_data, "r") as fq:
-#         data = json.load(fq)
-#
-#         for item in data:
-#             for name in item["tags"]:
-#                 tags.add(name)
-#
-#     for tag in tags:
-#         row = Tag(tag=tag)
-#         row.save()
-#
-#
-# def create_quotes():
-#     Quote.objects.all().delete()
-#
-#     authors = Author.objects.all()
-#     tags = Tag.objects.all()
-#
-#     with open(quote_data, "r") as fq:
-#         data = json.load(fq)
-#
-#         for quote in data:
-#             for author in authors:
-#                 if author.fullname == quote["author"]:
-#                     row = Quote(author=author, quote=quote["quote"])
-#                     row.save()
-#
-#                     for record in quote["tags"]:
-#                         for tag in tags:
-#                             if tag.tag == record:
-#                                 row.tags.add(tag)
+def create_phone_number():
+    PhoneNumber.objects.all().delete()
+    contacts = Contact.objects.all()
+    for contact in contacts:
+        number = f"+380{fake.msisdn()[4:]}"
+        number_reg = ph_nu.from_string(number, region="UA")
+        row = PhoneNumber.objects.create(
+            phone_number=number_reg.as_e164, contact=contact
+        )
+        row.save()
 
 
 if __name__ == "__main__":
-    create_contacts()
-    # create_authors()
-    # create_tags()
-    # create_quotes()
+    create_contact()
+    create_phone_number()
