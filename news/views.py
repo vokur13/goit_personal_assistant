@@ -6,6 +6,8 @@ from datetime import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 
+from .forms import SearcCityForm
+
 
 url = 'https://www.ukr.net/news/'
 url_bank = 'https://api.privatbank.ua/p24api/exchange_rates?date='
@@ -90,7 +92,13 @@ def rates(request):
 
 def weather(request):
 	list_weather = list()
-	for city in weather_cities:
+	new_weather_cities = weather_cities.copy()
+	form = SearcCityForm(request.GET)
+	if form.is_valid():
+		city = form.cleaned_data.get('weather_city')
+		if city:
+			new_weather_cities.insert(0, city)
+	for city in new_weather_cities:
 		new_url_weather = url_weather + city.lower()
 		response = requests.get(new_url_weather)
 		soup = BeautifulSoup(response.text, 'lxml')
@@ -98,6 +106,8 @@ def weather(request):
 		tr = tbody.find('tr', class_='temperature')
 		t1 = tr.find('td', class_='p3')
 		t2 = tr.find('td', class_='p4 bR')
+		if not t2:
+			t2 = tr.find('td', class_= 'p4 bR cur')
 		t3 = tr.find('td', class_='p5')
 		t4 = tr.find('td', class_='p6 bR')
 		if not t4:
@@ -124,7 +134,7 @@ def weather(request):
 		opadu_d = opadu.find('td', class_='p5').text
 		opadu_n = opadu.find('td', class_='p7').text
 		dict_weather = {
-			'city': city,
+			'city': city.title(),
 			'morning_t': morning_t,
 			'day_t': day_t,
 			'night_t': night_t,
@@ -144,4 +154,4 @@ def weather(request):
 		list_weather.append(dict_weather)
 	today = datetime.now()
 	current_date = today.strftime('%d.%m.%Yр.')
-	return render(request, 'weather.html', context={'context_weather': current_date, 'list_weather': list_weather})
+	return render(request, 'weather.html', context={'context_weather': current_date, 'list_weather': list_weather, 'form': form})

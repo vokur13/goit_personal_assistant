@@ -2,12 +2,13 @@
 
 
 {% block content %}
-    <h1 style="text-align: center;">{{ news_title }}</h1>
+
     <a href="{% url 'home' %}" class="btn btn-secondary mt-3">На головну</a>
-    <ul>
+    <h2 style="text-align: center;">{{ news_title }}</h2>
+        <ul>
         {% for news_item in list_news %}
             <li>
-                <h3>{{ news_item.title }}</h3>
+                <h5>{{ news_item.title }}</h5>
                 <p>Джерело: {{ news_item.source }}</p>
                 <a target='_blank' rel='norefferer noopener' href="{{ news_item.link }}" class="btn btn-primary">Читати</a>
             </li>

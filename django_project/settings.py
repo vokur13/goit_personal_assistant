@@ -124,7 +124,7 @@ CLOUDINARY_STORAGE = {
     'API_KEY': "419691218689934",
     'API_SECRET': "1zbqd9f1ptwFtG1yEAGuoCuLXUQ",
 }
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+#DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -188,22 +188,22 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-EMAIL_HOST = env.str("EMAIL_HOST")
-EMAIL_PORT = env.str("EMAIL_PORT")
-EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+# EMAIL_HOST = env.str("EMAIL_HOST")
+# EMAIL_PORT = env.str("EMAIL_PORT")
+# EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-EMAIL_HOST = EMAIL_HOST
-EMAIL_PORT = EMAIL_PORT
-EMAIL_STARTTLS = False
-EMAIL_USE_SSL = False
-EMAIL_USE_TLS = True
-VALIDATE_CERTS = False
-EMAIL_HOST_USER = EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# EMAIL_HOST = EMAIL_HOST
+# EMAIL_PORT = EMAIL_PORT
+# EMAIL_STARTTLS = False
+# EMAIL_USE_SSL = False
+# EMAIL_USE_TLS = True
+# VALIDATE_CERTS = False
+# EMAIL_HOST_USER = EMAIL_HOST_USER
+# EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 

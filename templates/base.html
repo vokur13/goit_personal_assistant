@@ -35,13 +35,13 @@
       <a class="navbar-brand" href="{% url 'home' %}">Personal Assistant</a>
 
       <div class="ms-auto"> <!-- Добавлен класс ms-auto для блока с кнопками -->
-        <a href="{% url 'news:rates' %}" class="btn btn-primary">Курси валют</a>
-        <a href="{% url 'news:weather' %}" class="btn btn-primary">Погода</a>
+        <a href="{% url 'news:rates' %}" class="btn btn-light">Курси валют</a>
+        <a href="{% url 'news:weather' %}" class="btn btn-light">Погода</a>
       </div>
       
       <!-- Добавляем кнопку "Новини" -->
       <div class="dropdown ms-auto mt-3">
-        <button class="btn btn-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Новини</button>
+        <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">Новини</button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <li><a class="dropdown-item" href="{% url 'news:show' category='politics'%}">Політика</a></li>
           <li><a class="dropdown-item" href="{% url 'news:show' category='economics'%}">Економіка</a></li>

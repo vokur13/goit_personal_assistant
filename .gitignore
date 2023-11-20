@@ -178,3 +178,5 @@ test_date.py
 
 fly.toml
 **/.env
+=
+query
