@@ -1,4 +1,5 @@
 import os
+import random
 import re
 import sys
 
@@ -6,8 +7,6 @@ import django
 import transliterate
 from faker import Faker
 from phonenumber_field.phonenumber import PhoneNumber as ph_nu
-
-from django_project.settings import env
 
 sys.path.append(
     "/Users/vokur/PycharmProjects/djangoProject/personal_assistant/django_project/django_project"
@@ -20,8 +19,8 @@ from accounts.models import CustomUser
 from contacts.models import Contact, PhoneNumber
 
 fake = Faker("uk_UA")
-APP_USER_NAME = env.str("APP_USER_NAME")
-NUMBER_OF_CONTACTS = int(env.str("NUMBER_OF_CONTACTS"))
+
+NUMBER_OF_CONTACTS = 100
 
 
 def transliterate_ukrainian_to_english(text):
@@ -59,18 +58,16 @@ def create_contact():
         sanitized_email = sanitize_email(email)
         dob = fake.date_of_birth(tzinfo=None, minimum_age=18, maximum_age=65)
         notes = fake.text(max_nb_chars=100)
-        for user in users:
-            if user.username == APP_USER_NAME:
-                row = Contact.objects.create(
-                    first_name=first_name,
-                    last_name=last_name,
-                    address=full_address,
-                    email=sanitized_email,
-                    dob=dob,
-                    notes=notes,
-                    owner=user,
-                )
-                row.save()
+        row = Contact.objects.create(
+            first_name=first_name,
+            last_name=last_name,
+            address=full_address,
+            email=sanitized_email,
+            dob=dob,
+            notes=notes,
+            owner=random.choice(users),
+        )
+        row.save()
 
 
 def create_phone_number():

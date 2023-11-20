@@ -1,3 +1,6 @@
-import uuid
+import random
 
-print(uuid.uuid4())
+# Choose a random element from a list
+fruits = ["apple"]
+random_fruit = random.choice(fruits)
+print(f"Random Fruit: {random_fruit}")
