@@ -177,3 +177,5 @@ fly.toml
 
 test_uuid.py
 test_random.py
+test_url.py
+test_cloudinary.py

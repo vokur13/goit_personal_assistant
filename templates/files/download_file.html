@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %}Download File{% endblock title %}
+
+{% block content %}
+
+    <h1>Download File</h1>
+    <p>{{ user_file.file }}</p>
+    <a href="{{ user_file.file }}" id="download-link">Download</a>
+    <p class="m-0 p-0">Повертатися до <a href="{% url 'files:file_list' %}">Список файлів</a>.</p>
+
+    <script>
+        // Use JavaScript to trigger the file download when the link is clicked
+        document.getElementById('download-link').addEventListener('click', function () {
+            // Get the CSRF token from the cookie
+            const csrfToken = document.cookie.split('; ').find(row => row.startsWith('csrftoken=')).split('=')[1];
+
+            // Perform a POST request to trigger the file download
+            fetch(window.location.href, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken,
+                },
+            })
+                .then(response => response.blob())
+                .then(blob => {
+                    // Create a temporary link element and trigger the download
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'downloaded_file';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
+        });
+    </script>
+
+{% endblock %}
+
