@@ -15,10 +15,11 @@ class NoteListView(LoginRequiredMixin, ListView):
     context_object_name = 'notes'
 
     def get_queryset(self):
+
         note_query = self.request.GET.get('note_query')
         tag_query = self.request.GET.get('tag_query')
 
-        queryset = Note.objects.all()
+        queryset = super(NoteListView, self).get_queryset().filter(owner=self.request.user)
 
         if note_query:
             queryset = queryset.filter(name__icontains=note_query)
@@ -48,8 +49,8 @@ class NoteDetailView(LoginRequiredMixin, DetailView):
     model = Note
     template_name = 'notes/note_detail.html'
     context_object_name = 'note'
-
-
+    
+    
 # Создание заметки
 class NoteCreateView(LoginRequiredMixin, CreateView):
     model = Note
@@ -89,12 +90,22 @@ class TagListView(LoginRequiredMixin, ListView):
     template_name = 'notes/tag_list.html'
     context_object_name = 'tags'
 
+    def get_queryset(self):
+        queryset = super(TagListView, self).get_queryset().filter(owner=self.request.user)
+        if self.request.user.is_authenticated:
+            queryset = queryset.filter(owner=self.request.user)
+        return queryset
+    
 
 # Создание тега
 class TagCreateView(LoginRequiredMixin, CreateView):
     model = Tag
     template_name = 'notes/tag_form.html'
     form_class = TagForm
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('notes:tag_list')
@@ -111,7 +122,7 @@ class TagEditView(LoginRequiredMixin, UpdateView):
 
 
 # Удаление тега
-class TagDeleteView(DeleteView):
+class TagDeleteView(LoginRequiredMixin, DeleteView):
     model = Tag
     template_name = 'notes/tag_confirm_delete.html'
     success_url = reverse_lazy('notes:tag_list')

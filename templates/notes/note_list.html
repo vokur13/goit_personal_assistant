@@ -70,7 +70,9 @@
     <h2>Доступні теги</h2>
     <ul>
       {% for tag in all_tags %}
+      {% if teg.owner.pk == request.user.pk %}
         <li>{{ tag.name }}</li>
+        {% endif %}
       {% endfor %}
     </ul>
     <a href="{% url 'notes:tag_list' %}" class="btn btn-secondary">Список тегів</a>
