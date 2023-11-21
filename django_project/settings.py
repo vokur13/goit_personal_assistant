@@ -19,6 +19,25 @@ from environs import Env
 env = Env()
 env.read_env()
 
+# # Cloudinary configuration
+# CLOUD_NAME = env.str("CLOUD_NAME")
+# API_KEY = env.str("API_KEY")
+# API_SECRET = env.str("API_SECRET")
+#
+# # CLOUDINARY_URL = f"cloudinary://{API_KEY}:{API_SECRET}@{CLOUD_NAME}"
+#
+# CLOUDINARY_STORAGE = {
+#     "CLOUD_NAME": CLOUD_NAME,
+#     "API_KEY": API_KEY,
+#     "API_SECRET": API_SECRET,
+# }
+
+# cloudinary.config(cloud_name=CLOUD_NAME, api_key=API_KEY, api_secret=API_SECRET)
+#
+# import cloudinary.uploader
+# import cloudinary.api
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -56,6 +75,7 @@ INSTALLED_APPS = [
     "notes",
     "uploader",
     "contacts",
+    "files",
     # Other apps…
     "phonenumber_field",
     "cloudinary_storage",
@@ -197,14 +217,29 @@ EMAIL_HOST_USER = EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
+# CLOUD_NAME = env.str("CLOUD_NAME")
+# API_KEY = env.str("API_KEY")
+# API_SECRET = env.str("API_SECRET")
+#
+# CLOUDINARY_STORAGE = {
+#     "CLOUD_NAME": CLOUD_NAME,
+#     "API_KEY": API_KEY,
+#     "API_SECRET": API_SECRET,
+# }
+
+# Cloudinary configuration
 CLOUD_NAME = env.str("CLOUD_NAME")
 API_KEY = env.str("API_KEY")
 API_SECRET = env.str("API_SECRET")
-
+#
+# CLOUDINARY_URL = f"cloudinary://{API_KEY}:{API_SECRET}@{CLOUD_NAME}"
+#
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": CLOUD_NAME,
     "API_KEY": API_KEY,
     "API_SECRET": API_SECRET,
 }
+#
+# # cloudinary.config(cloud_name=CLOUD_NAME, api_key=API_KEY, api_secret=API_SECRET)
+# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"

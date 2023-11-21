@@ -20,6 +20,7 @@
     </style>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/notes/notes.css' %}">
+
 </head>
 
 <body>
@@ -28,7 +29,9 @@
         <a class="navbar-brand fs-4 text" href="{% url 'home' %}">Personal Assistant</a>
         <ul class="nav col-12 col-lg-auto ms-lg-auto mb-2 justify-content-center mb-md-0">
             {% if user.is_authenticated %}
-                <li><a href="{% url 'upload_file' %}" class="nav-link px-2 text-white">+ Новий файл</a>
+                {#                <li><a href="{% url 'upload_file' %}" class="nav-link px-2 text-white">+ Новий файл</a>#}
+                {#                </li>#}
+                <li><a href="{% url 'files:file_upload' %}" class="nav-link px-2 text-white">+ Новий файл</a>
                 </li>
                 <li><a href="{% url 'notes:note_list' %}" class="nav-link px-2 text-white">+ Нотатки</a></li>
                 <li><a href="{% url 'contact_new' %}" class="nav-link px-2 text-white">+ Новий Контакт</a></li>
@@ -71,10 +74,11 @@
     <div>
         <h6>GoIT Global Python Web 2023</h6>
         <ul>
-            <li><a href="https://www.linkedin.com/in/volodymyr-kurov-1a5043253">Volodymyr Kurov</a></li>
-            <li><a href="https://www.linkedin.com/in/shevchenko-sergiy/">Сергій Шевченко</a></li>
-            <li><a href="">Денис Маштак</a></li>
-            <li><a href="">Олександр Мартинюк</a></li>
+            <li><a target="_blank" href="https://www.linkedin.com/in/volodymyr-kurov-1a5043253">Volodymyr Kurov</a></li>
+            <li><a target="_blank" href="https://www.linkedin.com/in/shevchenko-sergiy/">Сергій Шевченко</a></li>
+            <li><a target="_blank" href="https://www.linkedin.com/in/denis-mashtak-03531b269/">Денис Маштак</a></li>
+            <li><a target="_blank" href="https://www.linkedin.com/in/oleksandr-martyniuk-b9116a298/">Олександр
+                Мартинюк</a></li>
         </ul>
     </div>
 </footer>

@@ -6,18 +6,18 @@
 
 {% block content %}
     <h2>Пошук контактів</h2>
-    <form action="{% url 'search_list' %}" method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button class="btn btn-secondary ml2" type="submit">Пошук</button>
-    </form>
     <table class="table table-striped">
         <thead>
+        <form action="{% url 'search_list' %}" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-secondary ml2" type="submit">Пошук</button>
+        </form>
         <tr>
             <th scope="col">ПРІЗВИЩЕ</th>
             <th scope="col">ІМ'Я</th>
-            <th scope="col">ЕЛЕКТРОННА ПОШТА</th>
             <th scope="col">ДАТА НАРОДЖЕННЯ</th>
+            <th scope="col">ЕЛЕКТРОННА ПОШТА</th>
             <th scope="col">ТЕЛЕФОН</th>
         </tr>
         </thead>
