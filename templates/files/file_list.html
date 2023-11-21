@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% block title %}File List{% endblock title %}
+
+{% block content %}
+
+    <h1>User File List</h1>
+
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-auto">
+
+                <form action="{% url 'files:file_list' %}" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    {#                    {{ form.as_p }}#}
+                    <button class="btn btn-secondary ml2" type="submit">Підтвердити</button>
+                </form>
+
+            </div>
+            <div class="col">
+                {% for user_file in file_list %}
+                    <p>
+                        <strong>Category:</strong> {{ user_file.category }} |
+                        <strong>File:</strong> <a href="{{ user_file.file.url }}"
+                                                  target="_blank">{{ user_file.file.name }}</a>
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.select-all-checkbox').change(function () {
+                if ($(this).prop('checked')) {
+                    $(this).closest('fieldset').find(':checkbox').prop('checked', true);
+                } else {
+                    $(this).closest('fieldset').find(':checkbox').prop('checked', false);
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

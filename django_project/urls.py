@@ -19,8 +19,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-# from django.views.generic.base import TemplateView
-
 urlpatterns = [
     # Django admin
     path("admin/", admin.site.urls),
@@ -33,4 +31,5 @@ urlpatterns = [
     path("uploader/", include("uploader.urls")),
     path("news/", include("news.urls")),
     path("notes/", include("notes.urls")),
+    path("files/", include("files.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

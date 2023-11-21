@@ -30,7 +30,10 @@
             <p><a href="{% url 'notes:note_list' %}" class="btn btn-primary btn-lg w-50" role="button">Переглянути
                 всі
                 нотатки</a></p>
-            <p><a href="{% url 'file_list' %}" class="btn btn-primary btn-lg w-50" role="button">Переглянути список
+            {#            <p><a href="{% url 'file_list' %}" class="btn btn-primary btn-lg w-50" role="button">Переглянути список#}
+            {#                файлів</a></p>#}
+            <p><a href="{% url 'files:file_list' %}" class="btn btn-primary btn-lg w-50" role="button">Переглянути
+                список
                 файлів</a></p>
         </div>
 

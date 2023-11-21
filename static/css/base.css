@@ -71,3 +71,11 @@ footer li a {
     color: white;
 }
 
+.row {
+    /*border: 1px solid red;*/
+}
+
+.col {
+    /*border: 1px solid blue;*/
+}
+
