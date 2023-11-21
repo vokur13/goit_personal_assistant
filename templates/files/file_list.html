@@ -24,10 +24,8 @@
                 {% for user_file in file_list %}
                     <p>
                         <strong>Category:</strong> {{ user_file.category }} |
-                        <strong>File:</strong> <a
-                            href="{% url 'files:download_file' user_file.pk %}"
-                            target="_blank"
-                    >{{ user_file.file.name }}</a>
+                        <strong>File:</strong> <a href="{{ user_file.get_absolute_url }}"
+                                                  target="_blank">{{ user_file.file.name }}</a>
                     </p>
                 {% endfor %}
             </div>

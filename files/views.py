@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView, FormView
+from django.views.generic import ListView, FormView, DetailView
 
 from files.forms import UserFileForm, UserFileFilterForm
 from files.models import UserFile
@@ -13,7 +13,7 @@ from files.models import UserFile
 
 class UserFileListView(LoginRequiredMixin, ListView, FormView):
     model = UserFile
-    template_name = "files/file_list.html"  # Replace with your actual template path
+    template_name = "files/file_list.html"
     success_url = reverse_lazy("files:file_list")
 
     def get(self, request, *args, **kwargs):
@@ -79,15 +79,10 @@ class UserFileUploadView(LoginRequiredMixin, View):
             return "other"
 
 
-class DownloadFileView(LoginRequiredMixin, View):
+class DownloadFileView(LoginRequiredMixin, DetailView):
+    model = UserFile
     template_name = "files/download_file.html"
     success_url = reverse_lazy("files:file_list")
-
-    def get(self, request, pk):
-        print(f"{pk=}")
-        user_file = get_object_or_404(UserFile, id=pk)
-        context = {"user_file": user_file}
-        return render(request, self.template_name, context)
 
     def post(self, request, pk):
         user_file = get_object_or_404(UserFile, id=pk)

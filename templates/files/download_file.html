@@ -7,8 +7,8 @@
 {% block content %}
 
     <h1>Download File</h1>
-    <p>{{ user_file.file }}</p>
-    <a href="{{ user_file.file }}" id="download-link">Download</a>
+    <p>{{ userfile.file }}</p>
+    <a href="{{ userfile.file }}" id="download-link">Download</a>
     <p class="m-0 p-0">Повертатися до <a href="{% url 'files:file_list' %}">Список файлів</a>.</p>
 
     <script>
