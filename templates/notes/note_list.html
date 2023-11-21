@@ -65,16 +65,16 @@
   <!-- Ссылка на создание новой заметки -->
   <a href="{% url 'notes:note_create' %}" class="btn btn-primary mt-3">Створити нову нотатку</a>
 
-  <!-- Список доступных тегов і кнопка для переходу на сторінку з тегами -->
-  <div class="mt-3">
-    <h2>Доступні теги</h2>
-    <ul>
-      {% for tag in all_tags %}
-      {% if teg.owner.pk == request.user.pk %}
+<!-- Список доступных тегов і кнопка для переходу на сторінку з тегами -->
+<div class="mt-3">
+  <h2>Доступні теги</h2>
+  <ul>
+    {% for tag in all_tags %}
+      {% if tag.owner.pk == request.user.pk %}
         <li>{{ tag.name }}</li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-    <a href="{% url 'notes:tag_list' %}" class="btn btn-secondary">Список тегів</a>
-  </div>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  <a href="{% url 'notes:tag_list' %}" class="btn btn-secondary">Список тегів</a>
+</div>
 {% endblock content %}

@@ -15,11 +15,9 @@ class NoteListView(LoginRequiredMixin, ListView):
     context_object_name = 'notes'
 
     def get_queryset(self):
-
         note_query = self.request.GET.get('note_query')
         tag_query = self.request.GET.get('tag_query')
-
-        queryset = super(NoteListView, self).get_queryset().filter(owner=self.request.user)
+        queryset = super().get_queryset().filter(owner=self.request.user)
 
         if note_query:
             queryset = queryset.filter(name__icontains=note_query)
@@ -31,7 +29,7 @@ class NoteListView(LoginRequiredMixin, ListView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['all_tags'] = Tag.objects.all()
+        context['all_tags'] = Tag.objects.filter(owner=self.request.user)
         return context
     
 
@@ -49,6 +47,11 @@ class NoteDetailView(LoginRequiredMixin, DetailView):
     model = Note
     template_name = 'notes/note_detail.html'
     context_object_name = 'note'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_tags'] = Tag.objects.filter(owner=self.request.user)
+        return context
     
     
 # Создание заметки
@@ -64,6 +67,11 @@ class NoteCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('notes:note_list')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_tags'] = Tag.objects.filter(owner=self.request.user)
+        return context
+
 
 # Редактирование заметки
 class NoteEditView(LoginRequiredMixin, UpdateView):
@@ -73,6 +81,11 @@ class NoteEditView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('notes:note_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_tags'] = Tag.objects.filter(owner=self.request.user)
+        return context
 
 
 # Удаление заметки

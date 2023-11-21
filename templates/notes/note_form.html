@@ -36,11 +36,13 @@
         <div class="form-group row">
           <label for="id_tags" class="col-sm-3 col-form-label">Тег:</label>
           <div class="col-sm-9">
-            {% if teg.owner.pk == request.user.pk %}
-            {{ form.tags }}
-            {% endif %}
+            <select name="tags" multiple>
+              {% for tag in user_tags %}
+                <option value="{{ tag.id }}">{{ tag.name }}</option>
+              {% endfor %}
+            </select>
           </div>
-        </div>
+        </div>                                   
 
         <button type="submit" class="btn btn-primary">Зберегти</button>
       </form>
