@@ -1,5 +1,4 @@
-import cloudinary
-import cloudinary.uploader
+from cloudinary import uploader
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -51,7 +50,11 @@ class UserFileUploadView(LoginRequiredMixin, View):
 
             # Upload the file to Cloudinary
             file = form.cleaned_data["file"]
-            cloudinary_response = cloudinary.uploader.upload(file)
+
+            cloudinary_response = uploader.upload(
+                file,
+                overwrite=True,
+            )
 
             # Determine the category based on file type
             category = self.get_file_category(file.name)
