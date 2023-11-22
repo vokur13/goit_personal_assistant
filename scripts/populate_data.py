@@ -20,7 +20,7 @@ from contacts.models import Contact, PhoneNumber
 
 fake = Faker("uk_UA")
 
-NUMBER_OF_CONTACTS = 100
+NUMBER_OF_CONTACTS = 200
 
 
 def transliterate_ukrainian_to_english(text):
