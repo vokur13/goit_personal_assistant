@@ -46,7 +46,7 @@ def show(request, category=None):
         news_on_page = paginator.page(paginator.num_pages)
     return render(
         request,
-        "news.html",
+        "news/news.html",
         {"list_news": news_on_page, "news_title": news_title[category]},
     )
 
@@ -93,7 +93,7 @@ def rates(request):
         list_exchange.append(one_dict)
     return render(
         request,
-        "rates.html",
+        "news/rates.html",
         context={"list_rates": current_date, "list_exchange": list_exchange},
     )
 
@@ -164,7 +164,7 @@ def weather(request):
     current_date = today.strftime("%d.%m.%Yр.")
     return render(
         request,
-        "weather.html",
+        "news/weather.html",
         context={
             "context_weather": current_date,
             "list_weather": list_weather,

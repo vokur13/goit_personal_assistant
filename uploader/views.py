@@ -23,7 +23,7 @@ def upload_file(request):
         elif file_type == "document":
             cloudinary.uploader.upload(file, resource_type="raw")
 
-    return render(request, "upload_file.html")
+    return render(request, "uploader/upload_file.html")
 
 
 def file_list(request):
@@ -65,7 +65,7 @@ def file_list(request):
 
     return render(
         request,
-        "file_list.html",
+        "uploader/file_list.html",
         {"images": images, "documents": documents, "videos": videos},
     )
 

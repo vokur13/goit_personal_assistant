@@ -17,7 +17,7 @@ from .models import Contact
 
 class ContactListView(LoginRequiredMixin, ListView):
     model = Contact
-    template_name = "contact_list.html"
+    template_name = "contacts/contact_list.html"
 
     def get_queryset(self, *args, **kwargs):
         qs = super(ContactListView, self).get_queryset().filter(owner=self.request.user)
@@ -26,7 +26,7 @@ class ContactListView(LoginRequiredMixin, ListView):
 
 
 class DOBListView(LoginRequiredMixin, ListView, FormView):
-    template_name = "dob_list.html"
+    template_name = "contacts/dob_list.html"
     success_url = reverse_lazy("dob_list.html")
 
     Contact.objects.get_upcoming_birthdays()
@@ -50,7 +50,7 @@ class DOBListView(LoginRequiredMixin, ListView, FormView):
 
 class PhoneNumberGet(DeleteView):
     model = Contact
-    template_name = "contact_detail.html"
+    template_name = "contacts/contact_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -61,7 +61,7 @@ class PhoneNumberGet(DeleteView):
 class PhoneNumberPost(SingleObjectMixin, FormView):
     model = Contact
     form_class = PhoneNumberForm
-    template_name = "contact_detail.html"
+    template_name = "contacts/contact_detail.html"
     object = {}
 
     def post(self, request, *args, **kwargs):
@@ -100,7 +100,7 @@ class ContactUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         "dob",
         "notes",
     )
-    template_name = "contact_edit.html"
+    template_name = "contacts/contact_edit.html"
 
     def test_func(self):
         obj = self.get_object()
@@ -109,7 +109,7 @@ class ContactUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class ContactDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Contact
-    template_name = "contact_delete.html"
+    template_name = "contacts/contact_delete.html"
     success_url = reverse_lazy("contact_list")
 
     def test_func(self):
@@ -119,7 +119,7 @@ class ContactDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class ContactCreateView(LoginRequiredMixin, CreateView):
     model = Contact
-    template_name = "contact_new.html"
+    template_name = "contacts/contact_new.html"
     fields = (
         "first_name",
         "last_name",
@@ -135,7 +135,7 @@ class ContactCreateView(LoginRequiredMixin, CreateView):
 
 
 class SearchListView(LoginRequiredMixin, ListView, FormView):
-    template_name = "search_list.html"
+    template_name = "contacts/search_list.html"
     success_url = reverse_lazy("search_list.html")
 
     def get(self, request, *args, **kwargs):
