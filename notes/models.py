@@ -5,6 +5,7 @@ from django_project import settings
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, null=False)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = "Tags"

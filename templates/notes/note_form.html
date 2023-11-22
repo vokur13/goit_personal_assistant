@@ -36,7 +36,13 @@
                 <div class="form-group row">
                     <label for="id_tags" class="col-sm-3 col-form-label">Тег:</label>
                     <div class="col-sm-9">
-                        {{ form.tags }}
+                        <label>
+                            <select name="tags" multiple>
+                                {% for tag in user_tags %}
+                                    <option value="{{ tag.id }}">{{ tag.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
                     </div>
                 </div>
 
