@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block title %}Note List{% endblock title %}
@@ -71,7 +72,7 @@
   <ul>
     {% for tag in all_tags %}
       {% if tag.owner.pk == request.user.pk %}
-        <li>{{ tag.name }}</li>
+        <li><a href="{% url 'notes:note_list' %}?tag_query={{ tag.name }}">{{ tag.name }}</a></li>
       {% endif %}
     {% endfor %}
   </ul>
