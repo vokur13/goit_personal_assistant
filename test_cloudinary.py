@@ -1,4 +1,5 @@
-import cloudinary.uploader
+import cloudinary
+from cloudinary import api
 
 from django_project.settings import env
 
@@ -10,14 +11,6 @@ api_secret = env.str("API_SECRET")
 # Set Cloudinary configuration
 cloudinary.config(cloud_name=cloud_name, api_key=api_key, api_secret=api_secret)
 
-# Replace 'custom_public_id' with your desired custom public ID
-custom_public_id = "custom_public_id"
+api.create_folder("media/downloads")
 
-# Specify the file you want to upload
-file_to_upload = "/Users/vokur/PycharmProjects/djangoProject/personal_assistant/django_project/media/images/24559-1-shrek-photos.jpeg"
-
-# Upload the file to Cloudinary with the custom public ID
-result = cloudinary.uploader.upload(file_to_upload, public_id=custom_public_id)
-
-# Print the result, including the public ID assigned by Cloudinary
-print(result)
+# uploader.upload(‘local path or online url of the file to be uploaded', folder = “_______/”, public_id = “_____”)
