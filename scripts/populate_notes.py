@@ -16,8 +16,8 @@ from notes.models import Tag, Note
 
 fake = Faker("uk_UA")
 
-NUMBER_OF_TAGS = 21
-NUMBER_OF_NOTES = 30
+NUMBER_OF_TAGS = 30
+NUMBER_OF_NOTES = 50
 
 
 def create_tag(number_of_tags):
