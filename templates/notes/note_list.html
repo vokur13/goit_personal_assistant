@@ -43,10 +43,8 @@
                 <td>
                     <form method="post" action="{% url 'notes:toggle_done' note.id %}">
                         {% csrf_token %}
-                        <label>
-                            <input type="checkbox" name="done" {% if note.done %}checked{% endif %}
-                                   onchange="this.form.submit()">
-                        </label>
+                        <input type="checkbox" name="done" {% if note.done %}checked{% endif %}
+                               onchange="this.form.submit()">
                         <input type="hidden" name="current_done" value="{{ note.done }}">
                     </form>
                 </td>
@@ -76,7 +74,7 @@
         <ul>
             {% for tag in all_tags %}
                 {% if tag.owner.pk == request.user.pk %}
-                    <li>{{ tag.name }}</li>
+                    <li><a href="{% url 'notes:note_list' %}?tag_query={{ tag.name }}">{{ tag.name }}</a></li>
                 {% endif %}
             {% endfor %}
         </ul>
