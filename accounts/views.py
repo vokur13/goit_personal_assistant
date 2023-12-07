@@ -25,11 +25,19 @@ class SignUpView(View):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # You can set the Gravatar URL based on the user's email
-            user.avatar = (
-                f"https://www.gravatar.com/avatar/{hashlib.md5(user.email.lower().encode()).hexdigest()}?d"
-                f"=wavatar&s=150"
-            )
+            user.avatar = self.get_gravatar_url(user.email)
             user.save()
-            return redirect("login")  # Redirect to your login view
+            return redirect("login")
         return render(request, self.template_name, {"form": form})
+
+    @staticmethod
+    def get_gravatar_url(email):
+        """
+        Generate and return a gravatar URL.
+        :param email: User's email address.
+        :return: Gravatar based on the user's email address.
+        """
+        return (
+            f"https://www.gravatar.com/avatar/{hashlib.md5(email.lower().encode()).hexdigest()}?d"
+            f"=wavatar&s=150"
+        )
